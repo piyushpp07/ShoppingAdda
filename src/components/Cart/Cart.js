@@ -50,60 +50,53 @@ const useStyles = makeStyles(theme => ({
         width: 38,
     },
 }))
+
 export default function Cart(props) {
+    //material ui components
     const theme = useTheme();
-    const [tot, setTot] = useState()
-    const [sav, setSave] = useState()
-
     const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
-
     const classes = useStyles();
+
+    //hooks
+    const [tot, setTot] = useState(0)
+    const [sav, setSave] = useState(0)
     const [docs, setDocs] = useState([]);
-    const id = props.user.uid
+    const ide = props.user.uid;
+    let total = 0, save = 0;
     useEffect(() => {
+        database.collection('users').doc(ide).collection('cart').onSnapshot((a) => {
+            const fdata = [];
+            a.forEach((item) => {
+                fdata.push({ ...item.data(), key: item.id })
 
-        let total = 0, save = 0;
-        const getDataFromFirebase = [];
-        database.
-            collection('users').
-            doc(id).
-            collection("cart").
-            onSnapshot((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    getDataFromFirebase.push({ ...doc.data(), key: doc.id });
-                    total = total + Number(doc.data().price);
-                    save = save + Number(doc.data().oldPrice - doc.data().price);
-                });
-                setDocs(getDataFromFirebase);
-                setTot(total);
-                setSave(save);
-            });
-
-    }, [props])
-    const deleteItem = (id, e) => {
-
-        database.
-            collection('users').
-            doc(props.user.uid).
-            collection("cart")
-            .doc(id).delete()
-            .then(() => {
-                // 
-
-                toast("item deleted")
-                // 
-            }).catch(() => {
-                toast("Warn")
             })
+            setDocs(fdata)
+            tote()
+        })
+        console.log(docs)
+    }, [props])
+    //deletion fuction
+    const deleteItem = async (id, e) => {
+        await database.collection('users').doc(ide).collection('cart').doc(id).delete().then(() => { tote() })
+    }
+    function tote() {
+        database.collection('users').doc(ide).collection('cart').onSnapshot((a) => {
+            a.forEach((item) => {
+                total = total + Number(item.data().price)
+                save = save + Number(item.data().oldPrice - item.data().price)
+            })
+            setSave(save)
+            setTot(total)
+        })
     }
 
 
-    console.log(docs)
+
     return (
         <Grid Container direction={matchesSM ? 'column' : ' row'} alignItems='center' className={classes.rowContainer}>
             <Grid item container direction='row' justifyContent='center'  >
                 <Grid item lg="4">
-                    {docs && docs.map((doc) =>
+                    {docs.map((doc) =>
                         <Card className={classes.root} style={{ marginBottom: '2em' }}>
                             <div className={classes.details}>
                                 <CardContent className={classes.content}>
@@ -162,87 +155,3 @@ export default function Cart(props) {
         </Grid >
     )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from 'react'
-// import { Container, Row, Col } from 'react-bootstrap'
-// import { Favorite, LocalMall, Star } from "@material-ui/icons";
-// import { database } from '../../firebase'
-// import CartItem from './CartItem';
-// export default function Mens(props) {
-
-//     const [docs, setDocs] = useState([]);
-
-
-
-//     const id = props.user.uid
-//     useEffect(() => {
-//         const getDataFromFirebase = [];
-//         const subscriber = database.
-//             collection('users').
-//             doc(id).
-//             collection("cart").
-//             onSnapshot((querySnapshot) => {
-//                 querySnapshot.forEach((doc) => {
-//                     getDataFromFirebase.push({ ...doc.data(), key: doc.id });
-//                 });
-//                 setDocs(getDataFromFirebase);
-//             });
-//         return () => subscriber();
-//     })
-
-//     return (
-//         <div>
-//             < Container style={{ alignItem: 'center', justifyContent: "center" }}>
-//                 {console.log(docs)}
-
-//                 <Row fixed>
-//                     <h3>Cart   </h3>
-//                     {docs && docs.map((doc) =>
-//                         <Col xs={14} md={7}>
-//                             <CartItem
-//                                 key={doc.id}
-//                                 id={doc.id}
-//                                 productName={doc.productName}
-//                                 image={doc.image}
-//                                 price={doc.price}
-//                             />
-//                         </Col>
-//                     )}
-//                 </Row>
-//             </Container>
-
-//         </div>
-
-//     )
-// }
