@@ -13,7 +13,6 @@ export default function Mens() {
                     {docs && docs.map((doc) =>
                         <Col xs={13} md={3}>
                             <ItemCards
-                                key={doc.id}
                                 id={doc.id}
                                 productName={doc.productName}
                                 image={doc.image}

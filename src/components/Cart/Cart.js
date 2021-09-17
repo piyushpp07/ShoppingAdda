@@ -77,7 +77,18 @@ export default function Cart(props) {
     }, [props])
     //deletion fuction
     const deleteItem = async (id, e) => {
-        await database.collection('users').doc(ide).collection('cart').doc(id).delete().then(() => { tote() })
+        await database.collection('users').doc(ide).collection('cart').doc(id).delete().then(() => {
+            tote()
+            toast("Product Deleted", {
+                position: "bottom-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+        })
     }
     function tote() {
         database.collection('users').doc(ide).collection('cart').onSnapshot((a) => {
@@ -89,69 +100,95 @@ export default function Cart(props) {
             setTot(total)
         })
     }
+    const addtoWish = (doc) => {
+        if (ide) {
+            database.collection("users").doc(ide).collection("wish").add({
+                doc
+            }).then(() => {
+                toast("Item Added to WishList",
+                    {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+            })
+        }
+        else {
+            toast.warn("Please Login First")
+        }
 
+    }
 
-
-    return (
-        <Grid Container direction={matchesSM ? 'column' : ' row'} alignItems='center' className={classes.rowContainer}>
-            <Grid item container direction='row' justifyContent='center'  >
-                <Grid item lg="4">
-                    {docs.map((doc) =>
-                        <Card className={classes.root} style={{ marginBottom: '2em' }}>
-                            <div className={classes.details}>
-                                <CardContent className={classes.content}>
-                                    <Typography component="h5" variant="h5">
-                                        {doc.productName}
-                                    </Typography>
-                                    <Typography variant="subtitle1" color="textSecondary">
-                                        orignal price ₹ {doc.oldPrice}
-                                    </Typography>
-                                    <Typography variant="subtitle1" style={{ color: 'green' }}>
-                                        Offer Price ₹ {doc.price}
-                                    </Typography>
-                                </CardContent>
-                                <div className={classes.controls}>
-                                    <IconButton >
-                                        <DeleteIcon onClick={() => deleteItem(doc.key)} />
-                                    </IconButton>
-                                    <ToastContainer />
-                                    <IconButton >
-                                        <FavoriteIcon />
-                                    </IconButton>
+    if (docs.length === 0)
+        return (
+            <img src={`https://i.pinimg.com/originals/fa/90/cd/fa90cdab2a780306d0c350964c81e391.png`} alt="Logo" style={{ width: '100%', height: '30em' }} />
+        )
+    else if (docs !== null)
+        return (
+            <Grid Container direction={matchesSM ? 'column' : ' row'} alignItems='center' className={classes.rowContainer}>
+                <Grid item container direction='row' justifyContent='center'  >
+                    <Grid item lg="4">
+                        {docs.map((doc) =>
+                            <Card className={classes.root} style={{ marginBottom: '2em' }}>
+                                <div className={classes.details}>
+                                    <CardContent className={classes.content}>
+                                        <Typography component="h5" variant="h5">
+                                            {doc.productName}
+                                        </Typography>
+                                        <Typography variant="subtitle1" color="textSecondary">
+                                            orignal price ₹ {doc.oldPrice}
+                                        </Typography>
+                                        <Typography variant="subtitle1" style={{ color: 'green' }}>
+                                            Offer Price ₹ {doc.price}
+                                        </Typography>
+                                    </CardContent>
+                                    <div className={classes.controls}>
+                                        <IconButton >
+                                            <DeleteIcon onClick={() => deleteItem(doc.key)} />
+                                        </IconButton>
+                                        <ToastContainer />
+                                        <IconButton >
+                                            <FavoriteIcon onClick={() => { addtoWish(doc) }} />
+                                        </IconButton>
+                                    </div>
                                 </div>
-                            </div>
-                            <CardMedia
-                                className={classes.cover}
-                                image={doc.image}
-                                title="Live from space album cover"
-                            />
+                                <CardMedia
+                                    className={classes.cover}
+                                    image={doc.image}
+                                    title="Live from space album cover"
+                                />
+                            </Card>
+                        )}
+
+
+                    </Grid>
+                    <br />
+                    <Grid item lg={5} sm={8} xs={7} style={{ marginLeft: matchesSM ? 0 : '10em' }} alignItems='center'  >
+                        <Card style={{ backgroundColor: '#F6F6F7' }}>
+                            <CardContent>
+                                <Typography style={{ backgroundColor: '#F6F6F7', color: 'black', fontFamily: "cursive", borderBottom: 'solid ' }}>
+                                    Subtotal
+                                </Typography>
+                                <br />
+                                <Typography style={{ color: 'black', fontFamily: "fantasy" }}>
+                                    The total Price is ₹{tot}
+                                </Typography>
+                                <Typography style={{ color: 'black', fontFamily: "fantasy" }}>
+                                    You Saved ₹{sav}
+                                </Typography>
+                                <br />
+                                <Button>
+                                    Pay Now
+                                </Button>
+                            </CardContent>
                         </Card>
-                    )}
-
-
+                    </Grid>
                 </Grid>
-                <br />
-                <Grid item lg={5} sm={8} xs={7} style={{ marginLeft: matchesSM ? 0 : '10em' }} alignItems='center'  >
-                    <Card style={{ backgroundColor: '#F6F6F7' }}>
-                        <CardContent>
-                            <Typography style={{ backgroundColor: '#F6F6F7', color: 'black', fontFamily: "cursive", borderBottom: 'solid ' }}>
-                                Subtotal
-                            </Typography>
-                            <br />
-                            <Typography style={{ color: 'black', fontFamily: "fantasy" }}>
-                                The total Price is ₹{tot}
-                            </Typography>
-                            <Typography style={{ color: 'black', fontFamily: "fantasy" }}>
-                                You Saved ₹{sav}
-                            </Typography>
-                            <br />
-                            <Button>
-                                Pay Now
-                            </Button>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Grid>
-        </Grid >
-    )
+            </Grid >
+        )
+
 }

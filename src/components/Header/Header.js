@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Button, IconButton, List, ListItem, Menu, MenuItem, Tab, Tabs, Typography } from '@material-ui/core';
+import { AppBar, Button, IconButton, List, ListItem, Tab, Tabs, Typography } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles } from '@material-ui/styles';
-import logo from '../../assets/logo.png'
-
 import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import { useMediaQuery } from '@material-ui/core';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import MenuIcon from '@material-ui/icons/Menu'
 import { ListItemText } from '@material-ui/core';
-import Mens from '../Mens/Mens';
-import Womens from '../Womens/Women';
-import Cart from '../Cart/Cart'
-import Wishlist from '../Wishlist/Wishlist';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase } from '@material-ui/core';
-import { Favorite, Receipt, ShoppingCart } from '@material-ui/icons';
+import { Favorite, ShoppingCart } from '@material-ui/icons';
 import { auth } from '../../firebase'
 import { useHistory } from 'react-router';
 import HeaderV from './HeaderV';
@@ -226,7 +220,7 @@ export default function Header(props) {
         { name: 'My Account', link: '/account', activeIndex: 4 },
         { name: 'My Order', link: '/myorder', activeIndex: 5, },
         { name: 'My Wallet', link: '/mywallet', activeIndex: 6 },
-        { name: 'My Wishlist', link: '/Whistlist', activeIndex: 7 },
+        { name: 'My Wishlist', link: '/Wishlist', activeIndex: 7 },
         { name: 'Cart', link: '/Cart', activeIndex: 8 },
     ];
     useEffect(() => {
@@ -322,7 +316,9 @@ export default function Header(props) {
                     to='/cart' onClick={() => props.setValue(8)}>
                     <ShoppingCart />
                 </Button>
-                <Button >
+                <Button
+                    component={Link}
+                    to='/Wishlist' onClick={() => props.setValue(9)}>
                     <Favorite />
                 </Button></div>
                 : <Button style={{ backgroundColor: "red" }}>

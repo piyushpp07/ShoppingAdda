@@ -9,7 +9,6 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import { auth } from '../../firebase'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Myaccount from '../User/MyAccount';
 import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({

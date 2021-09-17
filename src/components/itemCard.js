@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { LocalMall } from "@material-ui/icons";
 
+
 const useStyles = makeStyles(theme => ({
     root: {
         width: '15rem',
@@ -34,11 +35,20 @@ const useStyles = makeStyles(theme => ({
 export default function ItemCards({ id, productName, image, price, oldPrice }) {
     const classes = useStyles();
     const [user, setUser] = useState("")
-    const [dc, setdc] = useState("false")
-    const [df, setdf] = useState("false")
+    const [docs, setDocs] = useState([]);
     useEffect(() => {
         auth.onAuthStateChanged(user => {
-            if (user) { setUser(user); console.log(user.uid) }
+            if (user) {
+                setUser(user); console.log(user.uid);
+                database.collection('users').doc(user.uid).collection('cart').onSnapshot((a) => {
+                    const fdata = [];
+                    a.forEach((item) => {
+                        fdata.push({ ...item.data(), key: item.id })
+
+                    })
+                    setDocs(fdata)
+                })
+            }
             else setUser(null)
         }
         )
@@ -55,14 +65,42 @@ export default function ItemCards({ id, productName, image, price, oldPrice }) {
 
 
     const addItem = () => {
+        let q = docs.filter(a => a.productName === productName)
 
         if (user) {
-            database.collection("users").doc(user.uid).collection("cart").add({
-                productName: productName,
-                image: image,
-                price: price,
-                oldPrice: oldPrice
-            }).then(() => { toast(Msg); setdc(true); })
+
+            if (q.length === 0) {
+                database.collection("users").doc(user.uid).collection("cart").add({
+                    productName: productName,
+                    image: image,
+                    price: price,
+                    oldPrice: oldPrice
+                }).then(() => {
+                    toast(Msg,
+                        {
+                            position: "bottom-right",
+                            autoClose: 1000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined
+                        });
+                })
+            }
+            else {
+                toast("Item already in cart", {
+                    position: "bottom-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                })
+
+            }
         }
         else {
             toast.warn("Please Login First")
@@ -77,7 +115,18 @@ export default function ItemCards({ id, productName, image, price, oldPrice }) {
                 image: image,
                 price: price,
                 oldPrice: oldPrice
-            }).then(() => { console.log("ITEMS aDDED TO CarT"); setdf("true") })
+            }).then(() => {
+                toast("Item Added to Cart",
+                    {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+            })
         }
         else {
             toast.warn("Please Login First")
@@ -101,11 +150,11 @@ export default function ItemCards({ id, productName, image, price, oldPrice }) {
                     image={image}
                 >
                     <IconButton>
-                        <FavoriteIcon onClick={() => { addtoWish() }} disabled={df} />
+                        <FavoriteIcon onClick={() => { addtoWish() }} />
                     </IconButton>
                     <br />
                     <IconButton btne>
-                        <LocalMallIcon onClick={() => { addItem() }} disabled={dc} />
+                        <LocalMallIcon onClick={() => { addItem() }} />
                     </IconButton>
                     <ToastContainer />
                 </CardMedia>
