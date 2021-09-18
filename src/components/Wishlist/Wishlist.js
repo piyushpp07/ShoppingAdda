@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Grid, makeStyles, Typography, useTheme, useMediaQuery } from '@material-ui/core';
 import { database } from '../../firebase'
 import Card from '@material-ui/core/Card';
@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DeleteIcon from '@material-ui/icons/Delete';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
-
+import { StateContext } from '../../context/StateProvider';
 const useStyles = makeStyles(theme => ({
     rowContainer: {
         paddingLeft: '5em',
@@ -56,8 +56,11 @@ export default function Cart(props) {
     const classes = useStyles();
 
     //hooks
+
     const [tot, setTot] = useState(0)
     const [sav, setSave] = useState(0)
+    const { wish } = useContext(StateContext)
+    const [dataWishlist, setDataWishlist] = wish
     const [docs, setDocs] = useState([]);
     const ide = props.user.uid;
     let total = 0, save = 0;
@@ -129,7 +132,7 @@ export default function Cart(props) {
             <Grid Container direction={matchesSM ? 'column' : ' row'} alignItems='center' className={classes.rowContainer}>
                 <Grid item container direction='row' justifyContent='center'  >
                     <Grid item lg="4">
-                        {docs.map((doc) =>
+                        {dataWishlist.map((doc) =>
                             <Card className={classes.root} style={{ marginBottom: '2em' }}>
                                 <div className={classes.details}>
                                     <CardContent className={classes.content}>

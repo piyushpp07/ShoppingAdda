@@ -17,6 +17,7 @@ import Mens from './components/Mens/Mens';
 import Cart from './components/Cart/Cart';
 import Wishlist from './components/Wishlist/Wishlist';
 
+import { StateProvider } from './context/StateProvider'
 
 function App() {
   const [value, setValue] = useState(0);
@@ -30,7 +31,8 @@ function App() {
     )
   }, [])
   return (
-    <div style={{ flex: 1 }}>
+    <StateProvider>
+
 
       <ThemeProvider theme={theme}>
         <BrowserRouter>
@@ -81,7 +83,10 @@ function App() {
 
         </BrowserRouter>
       </ThemeProvider>
-    </div>
+
+
+    </StateProvider>
+
   );
 }
 
