@@ -76,19 +76,6 @@ export const StateProvider = (props) => {
    }, [setDataMens, setDataWomens, setDataCart, setDataWishlist, user])
 
 
-   const deleteItem = async (id, e) => {
-      await database.collection('users').doc(user).collection('cart').doc(id).delete().then(() => {
-         toast("Product Deleted", {
-            position: "bottom-right",
-            autoClose: 1000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-         })
-      })
-   }
 
    return (
       <StateContext.Provider
