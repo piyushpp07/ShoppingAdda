@@ -1,17 +1,24 @@
 import React, { useState, useEffect, createContext } from 'react'
+import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import { auth, database } from '../firebase';
 
 export const StateContext = createContext();
 
 
+
 export const StateProvider = (props) => {
    const [user, setUser] = useState()
+   const [cartTotal, setcartTotal] = useState()
+   const [cartSave, setcartSave] = useState()
+   const [wishTotal, setWishTotal] = useState()
+   const [wishSave, setWishSave] = useState()
    const [dataMens, setDataMens] = useState([])
    const [dataWomens, setDataWomens] = useState([])
    const [dataMobile, setDataMobile] = useState([])
    const [dataCart, setDataCart] = useState([])
    const [dataWishlist, setDataWishlist] = useState([])
    const [allData, setAllData] = useState({})
+
    useEffect(() => {
       auth.onAuthStateChanged(usr => {
          setUser(usr.uid)
@@ -54,26 +61,38 @@ export const StateProvider = (props) => {
          setDataCart(fdata)
       })
 
-
-
       //Wishlist Data from Firebase
-      const getWishDataFromFirebase = [];
       database.collection('users').doc(user).collection("wish").onSnapshot((querySnapshot) => {
+         const getWishDataFromFirebase = [];
          querySnapshot.forEach((doc) => {
             getWishDataFromFirebase.push({ ...doc.data(), key: doc.id });
          });
          setDataWishlist(getWishDataFromFirebase);
       });
-      setAllData({
-         mens: [dataMens, setDataMens],
-         womens: [dataWomens, setDataWomens],
-         userdata: [user, setUser],
-         mobile: [dataMobile, setDataMobile],
-         cart: [dataCart, setDataCart],
-         wish: [dataWishlist, setDataWishlist]
+
+      database.collection('users').doc(user).collection('cart').onSnapshot((a) => {
+         let total = 0;
+         let save = 0;
+         a.forEach((item) => {
+            total = total + Number(item.data().price)
+            save = save + Number(item.data().oldPrice - item.data().price)
+         })
+         setcartSave(save)
+         setcartTotal(total)
+      })
+      database.collection('users').doc(user).collection('wish').onSnapshot((a) => {
+         let total = 0;
+         let save = 0;
+         a.forEach((item) => {
+            total = total + Number(item.data().price)
+            save = save + Number(item.data().oldPrice - item.data().price)
+         })
+         setWishSave(save)
+         setWishTotal(total)
       })
 
-   }, [setDataMens, setDataWomens, setDataCart, setDataWishlist, user])
+
+   }, [setDataMens, setDataWomens, setDataCart, user, wishSave, wishTotal, dataWishlist])
 
 
 
@@ -86,7 +105,11 @@ export const StateProvider = (props) => {
             userdata: [user, setUser],
             mobile: [dataMobile, setDataMobile],
             cart: [dataCart, setDataCart],
-            wish: [dataWishlist, setDataWishlist]
+            wish: [dataWishlist, setDataWishlist],
+            cartsave: [cartSave, setcartSave],
+            carttotal: [cartTotal, setcartTotal],
+            wishsave: [wishSave, setWishSave],
+            wishtotal: [wishTotal, setWishTotal],
          }
          }
       >

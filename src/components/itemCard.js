@@ -36,6 +36,7 @@ export default function ItemCards({ id, productName, image, price, oldPrice }) {
     const classes = useStyles();
     const [user, setUser] = useState("")
     const [docs, setDocs] = useState([]);
+    const [wishData, setWishData] = useState([]);
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
@@ -47,6 +48,14 @@ export default function ItemCards({ id, productName, image, price, oldPrice }) {
 
                     })
                     setDocs(fdata)
+                })
+                database.collection('users').doc(user.uid).collection('wish').onSnapshot((a) => {
+                    const wdata = [];
+                    a.forEach((item) => {
+                        wdata.push({ ...item.data(), key: item.id })
+
+                    })
+                    setWishData(wdata)
                 })
             }
             else setUser(null)
@@ -89,7 +98,7 @@ export default function ItemCards({ id, productName, image, price, oldPrice }) {
                 })
             }
             else {
-                toast("Item already in cart", {
+                toast.warn("Item already in cart", {
                     position: "bottom-right",
                     autoClose: 1000,
                     hideProgressBar: false,
@@ -109,24 +118,39 @@ export default function ItemCards({ id, productName, image, price, oldPrice }) {
     }
 
     const addtoWish = () => {
+        let q = wishData.filter(a => a.productName === productName)
         if (user) {
-            database.collection("users").doc(user.uid).collection("wish").add({
-                productName: productName,
-                image: image,
-                price: price,
-                oldPrice: oldPrice
-            }).then(() => {
-                toast("Item Added to Cart",
-                    {
-                        position: "bottom-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-            })
+            if (q.length === 0) {
+                database.collection("users").doc(user.uid).collection("wish").add({
+                    productName: productName,
+                    image: image,
+                    price: price,
+                    oldPrice: oldPrice
+                }).then(() => {
+                    toast("Item Added to Wishlist",
+                        {
+                            position: "bottom-right",
+                            autoClose: 1000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                })
+            }
+            else {
+                toast.warn("Item already in WishList", {
+                    position: "bottom-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+
+                })
+            }
         }
         else {
             toast.warn("Please Login First")

@@ -12,8 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { StateContext } from '../../context/StateProvider';
-
-
+import EmptyCart from '../../assets/EmptyCart.png';
 
 const useStyles = makeStyles(theme => ({
     rowContainer: {
@@ -61,17 +60,23 @@ export default function Cart(props) {
 
 
 
-    //hooks
+    //Data
     const [tot, setTot] = useState(0)
     const [sav, setSave] = useState(0)
-    const { cart } = useContext(StateContext);
+    const { wish, cart, userdata, cartsave, carttotal } = useContext(StateContext);
     const [dataCart, setDataCart] = cart;
-    const ide = props.user.uid;
+    const [dataWishlist, setDataWishlist] = wish;
+    const [cartSave, setcartSave] = cartsave;
+    const [cartTotal, setcartTotal] = carttotal;
+    const [user, setUser] = userdata;
+    const ide = user;
 
+
+    //useEffect
     useEffect(() => {
         console.log({ dataCart })
         tote()
-    }, [props])
+    }, [tot])
     //deletion fuction
     const deleteItem = async (id, e) => {
         await database.collection('users').doc(ide).collection('cart').doc(id).delete().then(() => {
@@ -87,6 +92,9 @@ export default function Cart(props) {
             })
         })
     }
+
+
+    // Total
     function tote() {
         database.collection('users').doc(ide).collection('cart').onSnapshot((a) => {
             let total = 0;
@@ -99,22 +107,43 @@ export default function Cart(props) {
             setTot(total)
         })
     }
+
+    //Add to wishlist
     const addtoWish = (doc) => {
+        let q = dataWishlist.filter(a => a.productName === doc.productName)
         if (ide) {
-            database.collection("users").doc(ide).collection("wish").add({
-                doc
-            }).then(() => {
-                toast("Item Added to WishList",
-                    {
-                        position: "bottom-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-            })
+            if (q.length === 0) {
+                database.collection("users").doc(ide).collection("wish").add({
+                    productName: doc.productName,
+                    image: doc.image,
+                    price: doc.price,
+                    oldPrice: doc.oldPrice
+                }).then(() => {
+                    toast("Item Added to WishList",
+                        {
+                            position: "bottom-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
+                })
+                database.collection('users').doc(ide).collection('cart').doc(doc.key).delete()
+            }
+            else {
+                toast("Product Moved To Wishlist", {
+                    position: "bottom-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+
+            }
         }
         else {
             toast.warn("Please Login First")
@@ -125,7 +154,7 @@ export default function Cart(props) {
     if (dataCart.length === 0)
         return (<>
             <h1>{dataCart}</h1>
-            <img src={`https://i.pinimg.com/originals/fa/90/cd/fa90cdab2a780306d0c350964c81e391.png`} alt="Logo" style={{ width: '100%', height: '30em' }} />
+            <img src={EmptyCart} alt="Logo" style={{ width: '100%', height: '35em' }} />
         </>)
     else
         return (
@@ -176,10 +205,10 @@ export default function Cart(props) {
                                 </Typography>
                                 <br />
                                 <Typography style={{ color: 'black', fontFamily: "fantasy" }}>
-                                    The total Price is ₹{tot}
+                                    The total Price is ₹{cartTotal}
                                 </Typography>
                                 <Typography style={{ color: 'black', fontFamily: "fantasy" }}>
-                                    You Saved ₹{sav}
+                                    You Saved ₹{cartSave}
                                 </Typography>
                                 <br />
                                 <Button>

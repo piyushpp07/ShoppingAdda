@@ -16,6 +16,7 @@ import Home from './components/Home/Home';
 import Mens from './components/Mens/Mens';
 import Cart from './components/Cart/Cart';
 import Wishlist from './components/Wishlist/Wishlist';
+import ItemCards from './components/itemCard';
 
 import { StateProvider } from './context/StateProvider'
 
@@ -76,16 +77,19 @@ function App() {
                   user={user}
                 />
               )} />
+
           </Switch>
 
 
           <Footer />
 
         </BrowserRouter>
+
       </ThemeProvider>
 
 
-    </StateProvider>
+
+    </StateProvider >
 
   );
 }

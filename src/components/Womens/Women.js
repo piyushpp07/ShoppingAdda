@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import ItemCards from '../itemCard'
 import { Container, Row, Col } from 'react-bootstrap'
-import GetDataW from '../getDataW';
 import { StateContext } from '../../context/StateProvider';
 export default function Womens() {
     const { mens, womens } = useContext(StateContext)
