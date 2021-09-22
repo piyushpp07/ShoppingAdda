@@ -10,16 +10,16 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const history = useHistory()
   const Login = async (e) => {
-
     e.preventDefault();
-    try {
-      const result = await auth.signInWithEmailAndPassword(email, password)
-      window.M.toast({ html: `welcome ${result.user.displayName}`, classes: "green" })
-      history.push('/')
-    }
-    catch (err) {
-      toast({ html: err.message, classes: "green" })
-    }
+    auth.signInWithEmailAndPassword(email, password).then((auth) => {
+      if (auth) {
+        history.push("/");
+      }
+    })
+      .catch((error) => alert(error.message));
+
+    history.push('/')
+
   }
 
   return (

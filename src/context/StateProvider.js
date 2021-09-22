@@ -1,10 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react'
-import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import { auth, database } from '../firebase';
-
 export const StateContext = createContext();
-
-
 
 export const StateProvider = (props) => {
    const [user, setUser] = useState()
@@ -17,11 +13,14 @@ export const StateProvider = (props) => {
    const [dataMobile, setDataMobile] = useState([])
    const [dataCart, setDataCart] = useState([])
    const [dataWishlist, setDataWishlist] = useState([])
-   const [allData, setAllData] = useState({})
+
 
    useEffect(() => {
       auth.onAuthStateChanged(usr => {
-         setUser(usr.uid)
+         if (usr != null)
+            setUser(usr.uid)
+         else
+            setUser(null);
       })
 
       //Mens Data Fetching
@@ -52,47 +51,49 @@ export const StateProvider = (props) => {
       });
 
       //Cart Data Fetching
-      database.collection('users').doc(user).collection('cart').onSnapshot((a) => {
-         const fdata = [];
-         a.forEach((item) => {
-            fdata.push({ ...item.data(), key: item.id })
+      if (user !== null) {
+         database.collection('users').doc(user).collection('cart').onSnapshot((a) => {
+            const fdata = [];
+            a.forEach((item) => {
+               fdata.push({ ...item.data(), key: item.id })
 
+            })
+            setDataCart(fdata)
          })
-         setDataCart(fdata)
-      })
 
-      //Wishlist Data from Firebase
-      database.collection('users').doc(user).collection("wish").onSnapshot((querySnapshot) => {
-         const getWishDataFromFirebase = [];
-         querySnapshot.forEach((doc) => {
-            getWishDataFromFirebase.push({ ...doc.data(), key: doc.id });
+         //Wishlist Data from Firebase
+         database.collection('users').doc(user).collection("wish").onSnapshot((querySnapshot) => {
+            const getWishDataFromFirebase = [];
+            querySnapshot.forEach((doc) => {
+               getWishDataFromFirebase.push({ ...doc.data(), key: doc.id });
+            });
+            setDataWishlist(getWishDataFromFirebase);
          });
-         setDataWishlist(getWishDataFromFirebase);
-      });
 
-      database.collection('users').doc(user).collection('cart').onSnapshot((a) => {
-         let total = 0;
-         let save = 0;
-         a.forEach((item) => {
-            total = total + Number(item.data().price)
-            save = save + Number(item.data().oldPrice - item.data().price)
+         database.collection('users').doc(user).collection('cart').onSnapshot((a) => {
+            let total = 0;
+            let save = 0;
+            a.forEach((item) => {
+               total = total + Number(item.data().price)
+               save = save + Number(item.data().oldPrice - item.data().price)
+            })
+            setcartSave(save)
+            setcartTotal(total)
          })
-         setcartSave(save)
-         setcartTotal(total)
-      })
-      database.collection('users').doc(user).collection('wish').onSnapshot((a) => {
-         let total = 0;
-         let save = 0;
-         a.forEach((item) => {
-            total = total + Number(item.data().price)
-            save = save + Number(item.data().oldPrice - item.data().price)
+         database.collection('users').doc(user).collection('wish').onSnapshot((a) => {
+            let total = 0;
+            let save = 0;
+            a.forEach((item) => {
+               total = total + Number(item.data().price)
+               save = save + Number(item.data().oldPrice - item.data().price)
+            })
+            setWishSave(save)
+            setWishTotal(total)
          })
-         setWishSave(save)
-         setWishTotal(total)
-      })
+      }
 
 
-   }, [setDataMens, setDataWomens, setDataCart, user, wishSave, wishTotal, dataWishlist])
+   }, [user])
 
 
 

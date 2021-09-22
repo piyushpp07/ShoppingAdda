@@ -26,7 +26,6 @@ export default function Signup() {
                         history.push("/");
                     }
                 })
-
                 .catch((error) => alert(error.message));
         } else {
             alert("Password must be same");

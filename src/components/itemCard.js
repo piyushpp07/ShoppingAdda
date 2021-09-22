@@ -61,7 +61,7 @@ export default function ItemCards({ id, productName, image, price, oldPrice }) {
             else setUser(null)
         }
         )
-    }, [])
+    }, [setUser])
 
     const Msg = () => (
         <>

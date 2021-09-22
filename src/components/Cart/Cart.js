@@ -13,6 +13,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { StateContext } from '../../context/StateProvider';
 import EmptyCart from '../../assets/EmptyCart.png';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles(theme => ({
     rowContainer: {
@@ -70,7 +71,7 @@ export default function Cart(props) {
     const [cartTotal, setcartTotal] = carttotal;
     const [user, setUser] = userdata;
     const ide = user;
-
+    const history = useHistory('');
 
     //useEffect
     useEffect(() => {
@@ -151,12 +152,12 @@ export default function Cart(props) {
 
     }
 
-    if (dataCart.length === 0)
+    if (dataCart.length === 0 && user !== null)
         return (<>
             <h1>{dataCart}</h1>
             <img src={EmptyCart} alt="Logo" style={{ width: '100%', height: '35em' }} />
         </>)
-    else
+    else if (user !== null)
         return (
             <Grid Container direction={matchesSM ? 'column' : ' row'} alignItems='center' className={classes.rowContainer}>
                 <Grid item container direction='row' justifyContent='center'  >
@@ -212,7 +213,7 @@ export default function Cart(props) {
                                 </Typography>
                                 <br />
                                 <Button>
-                                    Pay Now
+                                    Proceed to Checkout
                                 </Button>
                             </CardContent>
                         </Card>
@@ -220,5 +221,8 @@ export default function Cart(props) {
                 </Grid>
             </Grid >
         )
+    else return (
+        history.push('/Login')
+    )
 
 }
