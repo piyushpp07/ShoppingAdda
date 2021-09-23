@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Button, IconButton, List, ListItem, Tab, Tabs, Typography } from '@material-ui/core';
+import { AppBar, Button, IconButton, List, ListItem, Menu, MenuItem, Tab, Tabs, Typography } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles } from '@material-ui/styles';
+import { alpha } from '@material-ui/core/styles';
+
 import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import { useMediaQuery } from '@material-ui/core';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import MenuIcon from '@material-ui/icons/Menu'
 import { ListItemText } from '@material-ui/core';
+
+import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase } from '@material-ui/core';
-import { Favorite, ShoppingCart } from '@material-ui/icons';
+import { Favorite, Receipt, ShoppingCart } from '@material-ui/icons';
 import { auth } from '../../firebase'
 import { useHistory } from 'react-router';
 import HeaderV from './HeaderV';
@@ -151,12 +155,13 @@ const useStyles = makeStyles(theme => ({
         borderBottom: '#F037A5'
     },
     searchIcon: {
-        padding: theme.spacing(0, 19),
+        padding: theme.spacing(0, 2),
         height: '100%',
         position: 'absolute',
         pointerEvents: 'none',
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         color: 'black'
     },
     search: {
@@ -167,9 +172,9 @@ const useStyles = makeStyles(theme => ({
         '&:hover': {
             backgroundColor: theme.palette.common.white,
         },
-        height: "3.05em ",
-        marginRight: theme.spacing(1),
-        width: '70%',
+        marginRight: theme.spacing(2),
+        marginLeft: 0,
+        width: '100%',
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(3),
             width: 'auto',
@@ -183,6 +188,7 @@ const useStyles = makeStyles(theme => ({
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
+        width: '100%',
         [theme.breakpoints.up('md')]: {
             width: '20ch',
         },
@@ -220,8 +226,8 @@ export default function Header(props) {
         { name: 'My Account', link: '/account', activeIndex: 4 },
         { name: 'My Order', link: '/myorder', activeIndex: 5, },
         { name: 'My Wallet', link: '/mywallet', activeIndex: 6 },
-        { name: 'My Wishlist', link: '/Wishlist', activeIndex: 7 },
-        { name: 'Cart', link: '/Cart', activeIndex: 8 },
+        { name: 'My Wishlist', link: '/whistlist', activeIndex: 7 },
+        { name: 'Cart', link: '/cart', activeIndex: 8 },
     ];
     useEffect(() => {
         [...routes, ...routesV, ...routesH].forEach(route => {
@@ -292,7 +298,7 @@ export default function Header(props) {
                 : <Button
                     // variant='contained' 
                     // color='secondary' 
-                    // className={classes .button}
+                    // className={classes.button}
                     style={{ color: "black" }}
                     component={Link}
                     to='/Login'
@@ -310,33 +316,13 @@ export default function Header(props) {
                     </Typography>
                 </Button>
             }
-            {props.user ? <div style={{ marginRight: "15em" }}>
-                <Button
-                    component={Link}
-                    to='/cart' onClick={() => props.setValue(8)}>
-                    <ShoppingCart />
-                </Button>
-                <Button
-                    component={Link}
-                    to='/Wishlist' onClick={() => props.setValue(9)}>
-                    <Favorite />
-                </Button></div>
-                : <Button style={{ backgroundColor: "red" }}>
-                    <Typography style={{
-                        fontFamily: 'Raleway',
-                        textTransform: 'none',
-                        fontWeight: 700,
-                        fontSize: '1.3rem',
-                        color: '#171717'
-                    }}
-                    >
-                        SignUp
-                    </Typography>
-
-                </Button >
-            }
-
-        </React.Fragment >
+            <Button component={Link} to='/whistlist' onClick={() => props.setValue(8)} >
+                <Favorite />
+            </Button>
+            <Button style={{ marginRight: '10em' }} component={Link} to='/cart' onClick={() => props.setValue(8)}>
+                <ShoppingCart />
+            </Button>
+        </React.Fragment>
 
     );
     const drawer = (
@@ -490,15 +476,10 @@ export default function Header(props) {
                             onClick={() => props.setValue(0)}
                             disableRipple
                         >
-                            <Typography variant='h3' style={{
-                                fontSize: '1.5rem', fontFamily: 'cursive',
-                                textTransform: 'none',
-                                color: 'black',
-                                fontWeight: 500
-                            }} align='left'
-                            >
-                                ShoppingAdda
-                            </Typography>
+                            <img alt='company logo'
+                                src='https://images.bewakoof.com/logos/bewakoof-logo-og.png'
+                                className={classes.logo}
+                            />
                         </Button>
 
                         {matches ? drawer : tabs}
@@ -509,4 +490,3 @@ export default function Header(props) {
         </React.Fragment>
     );
 }
-

@@ -1,4 +1,3 @@
-import './App.css';
 import React, { useState, useEffect } from "react";
 import Header from './components/Header/Header';
 import theme from './components/Header/Theme';
@@ -16,7 +15,7 @@ import Home from './components/Home/Home';
 import Mens from './components/Mens/Mens';
 import Cart from './components/Cart/Cart';
 import Wishlist from './components/Wishlist/Wishlist';
-import ItemCards from './components/itemCard';
+
 
 import { StateProvider } from './context/StateProvider'
 
