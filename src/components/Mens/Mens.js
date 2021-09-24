@@ -8,11 +8,13 @@ export default function Mens() {
     const { mens } = useContext(StateContext)
     const [dataMens, setDataMens] = mens;
 
+
     return (
         <div>
 
             < Container style={{ alignItem: 'center', justifyContent: "center" }}>
                 <h3>Men's Clothing </h3>
+
                 <Row fixed>
                     {dataMens && dataMens.map((doc) =>
                         <Col xs={13} md={3}>
@@ -28,6 +30,5 @@ export default function Mens() {
                 </Row>
             </Container>
         </div>
-
     )
 }

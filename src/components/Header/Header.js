@@ -226,8 +226,8 @@ export default function Header(props) {
         { name: 'My Account', link: '/account', activeIndex: 4 },
         { name: 'My Order', link: '/myorder', activeIndex: 5, },
         { name: 'My Wallet', link: '/mywallet', activeIndex: 6 },
-        { name: 'My Wishlist', link: '/whistlist', activeIndex: 7 },
-        { name: 'Cart', link: '/cart', activeIndex: 8 },
+        { name: 'My Wishlist', link: '/Wishlist', activeIndex: 7 },
+        { name: 'Cart', link: '/Cart', activeIndex: 8 },
     ];
     useEffect(() => {
         [...routes, ...routesV, ...routesH].forEach(route => {
@@ -316,7 +316,7 @@ export default function Header(props) {
                     </Typography>
                 </Button>
             }
-            <Button component={Link} to='/whistlist' onClick={() => props.setValue(8)} >
+            <Button component={Link} to='/Wishlist' onClick={() => props.setValue(8)} >
                 <Favorite />
             </Button>
             <Button style={{ marginRight: '10em' }} component={Link} to='/cart' onClick={() => props.setValue(8)}>
@@ -476,10 +476,7 @@ export default function Header(props) {
                             onClick={() => props.setValue(0)}
                             disableRipple
                         >
-                            <img alt='company logo'
-                                src='https://images.bewakoof.com/logos/bewakoof-logo-og.png'
-                                className={classes.logo}
-                            />
+                            <h5 style={{ alignContent: 'center', justifyContent: 'center' }}>ShoppingAdda</h5>
                         </Button>
 
                         {matches ? drawer : tabs}
