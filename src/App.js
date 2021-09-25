@@ -15,7 +15,7 @@ import Home from './components/Home/Home';
 import Mens from './components/Mens/Mens';
 import Cart from './components/Cart/Cart';
 import Wishlist from './components/Wishlist/Wishlist';
-
+import Checkout from './components/Cart/Checkout'
 
 import { StateProvider } from './context/StateProvider'
 
@@ -62,6 +62,10 @@ function App() {
             <Route path="/Womens">
               <Womens />
             </Route>
+            <Route path="/Checkout">
+              <Checkout />
+            </Route>
+
             <Route exact path='/cart'
               render={(props) => (
                 <Cart

@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { StateContext } from '../../context/StateProvider';
 import EmptyCart from '../../assets/EmptyCart.png'
 // import database  from '../../firebase';
-
+import { Link } from 'react-router-dom';
 const useStyles = makeStyles(theme => ({
     rowContainer: {
         paddingLeft: '4em',
@@ -468,7 +468,7 @@ export default function Cart(props) {
                                             </Button>
                                         </Grid>
                                         <Grid item>
-                                            <Button
+                                            <Button component={Link} to='/Checkout'
                                                 disabled={
                                                     name.length === 0 ||
                                                     email.length === 0 ||
@@ -483,10 +483,10 @@ export default function Cart(props) {
                                                     city == 0
                                                 }
                                                 variant='contained'
-                                                className={classes.sendButton}
+                                                style={{ backgroundColor: 'white' }}
                                                 onClick={() => { submit(); }}
                                             >
-                                                go
+                                                submit
                                             </Button>
                                         </Grid>
                                     </Grid>
