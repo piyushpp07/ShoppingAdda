@@ -9,6 +9,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.23.0",
     "bootstrap": "^5.1.0",
     "braintree-web-drop-in-react": "^1.2.1",
     "firebase": "^9.0.1",
@@ -20,6 +21,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-slick": "^0.28.1",
+    "react-stripe-checkout": "^2.6.3",
     "react-toastify": "^8.0.2",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.1",
@@ -48,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   }
 }

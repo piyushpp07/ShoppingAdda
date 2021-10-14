@@ -5,9 +5,10 @@ import { Grid, makeStyles, Typography, useTheme, useMediaQuery, Button } from '@
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import { Dropdown, DropdownButton } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { StateContext } from '../../context/StateProvider';
-
+import StripeCheckout from 'react-stripe-checkout';
+import axios from "axios";
 const useStyles = makeStyles(theme => ({
    rowContainer: {
       paddingLeft: '4em',
@@ -113,8 +114,29 @@ export default function Checkout() {
    const [cartTotal, setcartTotal] = carttotal;
    //State 
    const [address, setAddress] = useState([])
-
+   const [value, setValue] = useState()
    const ide = user;
+   const [amount, setAmount] = useState()
+
+   const [product] = React.useState({
+      name: "Purchase",
+      description: dataCart
+   });
+
+   async function handleToken(token) {
+      const response = await axios.post(
+         "http://localhost:5000/checkout",
+         { token, amount, address }
+      );
+      const { status } = response.data;
+      console.log("Response:", response.data);
+      setcartTotal(0);
+      if (status === "success") {
+         console.log("Success! Check email for details", { type: "success" });
+      } else {
+         console.log("Something went wrong", { type: "error" });
+      }
+   }
 
 
    // Address FEtch
@@ -125,6 +147,7 @@ export default function Checkout() {
             getAddress.push({ ...doc.data(), key: doc.id });
          });
          setAddress(getAddress);
+         setAmount(cartTotal)
       });
    }, [ide])
 
@@ -202,10 +225,26 @@ export default function Checkout() {
                            You Saved ₹{cartSave}
                         </Typography>
                         <br />
-                        <DropdownButton id="dropdown-basic-button" title="Select Payment Method">
-                           <Dropdown.Item >Pay On Delivery</Dropdown.Item>
-                           <Dropdown.Item>Pay Using Cart</Dropdown.Item>
-                        </DropdownButton>
+                        <Form>
+                           <Form.Select aria-label="Default select example" value={value} onChange={(e) => { const s = e.target.value; setValue(s) }}>
+                              <option disabled selected>Payment Method </option>
+                              <option value="Pay On Delivery">Pay On Delivery</option>
+                              <option value="Pay With Card">Pay With Card</option>
+                           </Form.Select>
+                           <br />
+                        </Form>
+                        {
+                           value === "Pay With Card" ?
+                              <>
+                                 <StripeCheckout stripeKey='pk_test_51JObFKSAm54TGSWjZQQVnpytQbBKaz7MqR7ewLtoeqZSsO9SZUl7n3ZZm3zEYV3sYmQnZaVbzZCttT3in6KJTxKS00lJalhL2a'
+                                    token={handleToken}
+                                    amount={cartTotal * 100}
+                                    name="Payment"
+                                 />
+                              </> :
+                              <Button style={{ borderColor: 'black', backgroundColor: 'red', color: 'white', borderRadius: '4px', padding: '0px 12px', fontSize: '14px', height: '30px', fontWeight: 'bold' }}>
+                                 Confirm Order</Button>
+                        }
                      </CardContent>
                   </Card>
                </Grid>
