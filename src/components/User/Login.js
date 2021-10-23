@@ -5,6 +5,8 @@ import { Link, useHistory } from "react-router-dom";
 import { Lock, Person } from "@material-ui/icons";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Button } from 'react-bootstrap'
+import firebase from '@firebase/app-compat';
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,9 +59,30 @@ export default function Login() {
               />
             </div>
             <div className="forgot-pass">
-              <Link to="coming-soon">Forgot Password?</Link>
+              <Link to='/forget' >Forgot Password?</Link>
             </div>
             <button onClick={Login}>Sign in</button>
+            <Button onClick={() => {
+              var provider = new firebase.auth.GoogleAuthProvider();
+              auth
+                .signInWithPopup(provider)
+                .then((result) => {
+                  /** @type {firebase.auth.OAuthCredential} */
+                  var credential = result.credential;
+                  var token = credential.accessToken;
+                  var user = result.user;
+                  if (result) {
+                    history.push("/");
+                  }
+                  // ...
+                }).catch((error) => {
+                  var errorCode = error.code;
+                  var errorMessage = error.message;
+                  var email = error.email;
+                  var credential = error.credential;
+                  // ...
+                });
+            }}>Sign In With Google</Button>
             <div className="signup">
               Not a member?
               <Link to="/SignUp"> Register now</Link>

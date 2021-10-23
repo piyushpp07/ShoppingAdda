@@ -33,7 +33,6 @@ export default function Signup() {
     };
     return (
         <>
-
             <Styles>
                 <div className="content">
                     <div className="text">
@@ -96,7 +95,7 @@ export default function Signup() {
                         </div>
                         <button onClick={signUp}>Sign Up</button>
                         <div className="signup">
-                            Have an account?
+                            Already  Have an account?
                             <Link to="/login">Login Now</Link>
                         </div>
                     </form>

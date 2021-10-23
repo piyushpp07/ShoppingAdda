@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { database } from '../../firebase';
 import styled from "styled-components";
 import { Grid, makeStyles, Typography, useTheme, useMediaQuery, Button, TextField, MenuItem, InputLabel, Dialog, DialogContent } from '@material-ui/core';
@@ -111,12 +111,14 @@ export default function Cart(props) {
     const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
     //Context 
-    const { cart, userdata, wish, cartsave, carttotal } = useContext(StateContext);
+    const { cart, userdata, wish, cartsave, carttotal, addr } = useContext(StateContext);
     const [dataCart, setDataCart] = cart;
     const [user, setUser] = userdata;
     const [dataWishlist, setDataWishlist] = wish;
     const [cartSave, setcartSave] = cartsave;
     const [cartTotal, setcartTotal] = carttotal;
+    const ide = user;
+    const [add, setAdd] = addr;
     //State 
     const [open, setOpen] = useState(false);
     const [name, setName] = useState('');
@@ -130,8 +132,6 @@ export default function Cart(props) {
     const [state, setState] = useState('');
     const [address, setAddress] = useState('');
     const [message, setMessage] = useState('');
-
-    const ide = user;
 
 
     // delete
@@ -155,6 +155,9 @@ export default function Cart(props) {
             }
             )
     }
+
+    //Fetching address
+
 
     // total
 
@@ -315,15 +318,19 @@ export default function Cart(props) {
                                         </Typography>
                                         <br />
                                         <Typography style={{ color: 'black', fontFamily: "fantasy" }}>
-                                            The total Price is ${cartTotal}
+                                            The total Price is ₹{cartTotal}
                                         </Typography>
                                         <Typography style={{ color: 'black', fontFamily: "fantasy" }}>
                                             You Saved ₹{cartSave}
                                         </Typography>
                                         <br />
-                                        <Button onClick={() => setOpen(true)} style={{ backgroundColor: '#506D84' }}>
-                                            Checkout
-                                        </Button>
+                                        {add.length === 0 ? <Button onClick={() => setOpen(true)} style={{ backgroundColor: '#506D84' }}>
+                                            Add Address
+                                        </Button> :
+                                            <Button component={Link} to='/Checkout' style={{ backgroundColor: 'red' }}>Go To checkout</Button>
+
+                                        }
+
                                     </CardContent>
                                 </Card>
                             </Grid>

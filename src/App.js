@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom"
 import { auth } from './firebase';
 
 //Components Imported
+import ForgotPassword from "./components/User/Forget";
 import Login from './components/User/Login';
 import Signup from './components/User/SignUp';
 import Footer from './components/Footer/Footer';
@@ -64,6 +65,9 @@ function App() {
             </Route>
             <Route path="/Checkout">
               <Checkout />
+            </Route>
+            <Route path="/forget">
+              <ForgotPassword />
             </Route>
 
             <Route exact path='/cart'

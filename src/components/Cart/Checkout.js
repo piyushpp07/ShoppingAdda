@@ -203,7 +203,7 @@ export default function Checkout() {
                            Shipping Address
                         </Typography>
                         <Typography style={{ backgroundColor: '#F6F6F7', color: 'black', fontFamily: "cursive", borderBottom: 'solid ' }}>
-                           {address.map(d =>
+                           {address .map(d =>
                               <div>
                                  Locality: {d.address}
                                  <br />
