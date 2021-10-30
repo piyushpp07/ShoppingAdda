@@ -95,7 +95,7 @@ export default function Signup() {
                         </div>
                         <button onClick={signUp}>Sign Up</button>
                         <div className="signup">
-                            Already  Have an account?
+                            Already Have an account?
                             <Link to="/login">Login Now</Link>
                         </div>
                     </form>

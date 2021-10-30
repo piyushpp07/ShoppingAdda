@@ -3,8 +3,8 @@ import ItemCards from '../itemCard'
 import { Container, Row, Col } from 'react-bootstrap'
 import { StateContext } from '../../context/StateProvider';
 export default function Womens() {
-   const { mens, womens } = useContext(StateContext)
-   const [dataWomens, setDataWomens] = womens;
+   const { womens } = useContext(StateContext)
+   const [dataWomens] = womens;
    return (
       <div>
 

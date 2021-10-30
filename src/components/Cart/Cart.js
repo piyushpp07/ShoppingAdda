@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { database } from '../../firebase';
 import styled from "styled-components";
-import { Grid, makeStyles, Typography, useTheme, useMediaQuery, Button, TextField, MenuItem, InputLabel, Dialog, DialogContent } from '@material-ui/core';
+import { Grid, makeStyles, Typography, useTheme, useMediaQuery, Button, TextField, Dialog, DialogContent } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -112,13 +112,13 @@ export default function Cart(props) {
 
     //Context 
     const { cart, userdata, wish, cartsave, carttotal, addr } = useContext(StateContext);
-    const [dataCart, setDataCart] = cart;
-    const [user, setUser] = userdata;
-    const [dataWishlist, setDataWishlist] = wish;
-    const [cartSave, setcartSave] = cartsave;
-    const [cartTotal, setcartTotal] = carttotal;
+    const [dataCart] = cart;
+    const [user] = userdata;
+    const [dataWishlist] = wish;
+    const [cartSave] = cartsave;
+    const [cartTotal] = carttotal;
     const ide = user;
-    const [add, setAdd] = addr;
+    const [add] = addr;
     //State 
     const [open, setOpen] = useState(false);
     const [name, setName] = useState('');
@@ -484,10 +484,10 @@ export default function Cart(props) {
                                                     phoneHelper.length !== 0 ||
                                                     emailHelper.length !== 0 ||
                                                     pincodeHelper.length !== 0 ||
-                                                    pincode == 0 ||
-                                                    address == 0 ||
-                                                    state == 0 ||
-                                                    city == 0
+                                                    pincode === 0 ||
+                                                    address === 0 ||
+                                                    state === 0 ||
+                                                    city === 0
                                                 }
                                                 variant='contained'
                                                 style={{ backgroundColor: 'white' }}

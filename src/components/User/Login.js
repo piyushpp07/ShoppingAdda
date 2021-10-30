@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { auth } from '../../firebase'
 import { Link, useHistory } from "react-router-dom";
 import { Lock, Person } from "@material-ui/icons";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from 'react-bootstrap'
 import firebase from '@firebase/app-compat';
@@ -23,7 +23,6 @@ export default function Login() {
     history.push('/')
 
   }
-
   return (
     <>
       <Styles>
@@ -62,15 +61,13 @@ export default function Login() {
               <Link to='/forget' >Forgot Password?</Link>
             </div>
             <button onClick={Login}>Sign in</button>
+
             <Button onClick={() => {
               var provider = new firebase.auth.GoogleAuthProvider();
               auth
                 .signInWithPopup(provider)
                 .then((result) => {
                   /** @type {firebase.auth.OAuthCredential} */
-                  var credential = result.credential;
-                  var token = credential.accessToken;
-                  var user = result.user;
                   if (result) {
                     history.push("/");
                   }
@@ -80,9 +77,13 @@ export default function Login() {
                   var errorMessage = error.message;
                   var email = error.email;
                   var credential = error.credential;
+                  console.log(errorCode, " ", errorMessage, " ", email, " ", credential)
                   // ...
                 });
-            }}>Sign In With Google</Button>
+            }}>
+              Sign In With Google
+            </Button>
+
             <div className="signup">
               Not a member?
               <Link to="/SignUp"> Register now</Link>

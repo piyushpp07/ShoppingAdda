@@ -17,7 +17,7 @@ import Mens from './components/Mens/Mens';
 import Cart from './components/Cart/Cart';
 import Wishlist from './components/Wishlist/Wishlist';
 import Checkout from './components/Cart/Checkout'
-
+import Search from './components/Header/Search';
 import { StateProvider } from './context/StateProvider'
 
 function App() {
@@ -69,7 +69,9 @@ function App() {
             <Route path="/forget">
               <ForgotPassword />
             </Route>
-
+            <Route path="/Search">
+              <Search />
+            </Route>
             <Route exact path='/cart'
               render={(props) => (
                 <Cart

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Button, IconButton, List, ListItem, Menu, MenuItem, Tab, Tabs, Typography } from '@material-ui/core';
+import { AppBar, Button, IconButton, List, ListItem, Tab, Tabs, Typography } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles } from '@material-ui/styles';
-import { alpha } from '@material-ui/core/styles';
+
 
 import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
@@ -12,10 +12,9 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import MenuIcon from '@material-ui/icons/Menu'
 import { ListItemText } from '@material-ui/core';
 
-import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase } from '@material-ui/core';
-import { Favorite, Receipt, ShoppingCart } from '@material-ui/icons';
+import { Favorite, ShoppingCart } from '@material-ui/icons';
 import { auth } from '../../firebase'
 import { useHistory } from 'react-router';
 import HeaderV from './HeaderV';
@@ -155,7 +154,7 @@ const useStyles = makeStyles(theme => ({
         borderBottom: '#F037A5'
     },
     searchIcon: {
-        padding: theme.spacing(0, 2),
+        padding: theme.spacing(0, 0.2),
         height: '100%',
         position: 'absolute',
         pointerEvents: 'none',
@@ -203,9 +202,13 @@ export default function Header(props) {
     const history = useHistory('');
     const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
     const matches = useMediaQuery(theme.breakpoints.down('md'));
-
+    const [search, setSearch] = useState("");
     const [openDrawer, setOpenDrawer] = useState(false)
-
+    const handelSubmit = (e) => {
+        e.preventDefault();
+        history.push(`/search?name=${search}`);
+        setSearch("")
+    }
     const handleChange = (e, newValue) => {
         props.setValue(newValue);
     }
@@ -269,17 +272,22 @@ export default function Header(props) {
                 ))}
             </Tabs>
             <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                    <SearchIcon />
-                </div>
-                <InputBase
-                    placeholder="Search…"
-                    classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                    }}
-                    inputProps={{ 'aria-label': 'search' }}
-                />
+                <form onSubmit={(e) => handelSubmit(e)}>
+                    <div className={classes.searchIcon}>
+                        <Button>  <SearchIcon /> </Button>
+                    </div>
+                    <InputBase
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Search…"
+                        classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput,
+                        }}
+                        value={search}
+                        inputProps={{ 'aria-label': 'search' }}
+                    />
+                </form>
+
             </div>
             {/* <Button 
             // variant='contained' 

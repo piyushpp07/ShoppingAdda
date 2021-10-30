@@ -104,13 +104,12 @@ export default function Checkout() {
 
    const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
    const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
-   const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
    //Context 
-   const { cart, userdata, wish, cartsave, carttotal } = useContext(StateContext);
-   const [dataCart, setDataCart] = cart;
-   const [user, setUser] = userdata;
-   const [cartSave, setcartSave] = cartsave;
+   const { cart, userdata, cartsave, carttotal } = useContext(StateContext);
+   const [dataCart] = cart;
+   const [user] = userdata;
+   const [cartSave] = cartsave;
    const [cartTotal, setcartTotal] = carttotal;
    //State 
    const [address, setAddress] = useState([])
@@ -203,7 +202,7 @@ export default function Checkout() {
                            Shipping Address
                         </Typography>
                         <Typography style={{ backgroundColor: '#F6F6F7', color: 'black', fontFamily: "cursive", borderBottom: 'solid ' }}>
-                           {address .map(d =>
+                           {address.map(d =>
                               <div>
                                  Locality: {d.address}
                                  <br />
