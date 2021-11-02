@@ -18,6 +18,7 @@ import Cart from './components/Cart/Cart';
 import Wishlist from './components/Wishlist/Wishlist';
 import Checkout from './components/Cart/Checkout'
 import Search from './components/Header/Search';
+import Myorder from "./components/Order/Myorder";
 import { StateProvider } from './context/StateProvider'
 
 function App() {
@@ -55,7 +56,7 @@ function App() {
               <Signup />
             </Route>
             <Route path="/Myaccount">
-              <Myaccount />
+              <Myaccount user={user} />
             </Route>
             <Route path="/Mens">
               <Mens />
@@ -72,6 +73,10 @@ function App() {
             <Route path="/Search">
               <Search />
             </Route>
+            <Route path="/Myorder">
+              <Myorder />
+            </Route>
+
             <Route exact path='/cart'
               render={(props) => (
                 <Cart
@@ -88,6 +93,7 @@ function App() {
               )} />
 
           </Switch>
+
 
 
           <Footer />

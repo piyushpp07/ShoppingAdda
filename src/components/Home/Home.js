@@ -7,7 +7,7 @@ import { Hidden } from '@material-ui/core';
 export default function Home() {
 
     return (
-        <div>
+        <div >
             < Container style={{ width: "100%" }}>
                 <Cursol />
                 <div style={{ marginTop: '2em' }}>

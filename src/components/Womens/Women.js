@@ -12,7 +12,7 @@ export default function Womens() {
             <h3 style={{ alignSelf: 'center' }}>Best Women's Collection</h3>
             <Row fixed>
                {dataWomens && dataWomens.map((doc) =>
-                  <Col xs={5} md={4}>
+                  <Col xs={8} md={4}>
                      <ItemCards
                         key={doc.id}
                         id={doc.id}

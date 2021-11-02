@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import { auth } from '../../firebase'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
@@ -88,7 +88,7 @@ export default function HeaderV(props) {
                     aria-haspopup="true"
                     onClick={handleToggle}
                 >
-                    <AccountCircleIcon />
+                    <AccountCircleOutlinedIcon />
                 </Button>
                 <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
                     {({ TransitionProps, placement }) => (
@@ -113,9 +113,9 @@ export default function HeaderV(props) {
                                             </Typography>
                                         </MenuItem>
                                         <MenuItem component={Link} to='/Myaccount'>My Account</MenuItem>
-                                        <MenuItem onClick={handleClose} className={classes.menuItem}>My Wishlist</MenuItem>
-                                        <MenuItem onClick={handleClose} className={classes.menuItem}>My Orders</MenuItem>
-                                        <MenuItem onClick={handleClose} className={classes.menuItem}>My Wallet</MenuItem>
+                                        <MenuItem component={Link} to='/Wishlist' className={classes.menuItem}>My Wishlist</MenuItem>
+                                        <MenuItem component={Link} to='/Myorder' className={classes.menuItem}>My Orders</MenuItem>
+
                                         <MenuItem onClick={() => {
                                             auth.signOut()
                                         }} className={classes.menuItem}>Logout</MenuItem>

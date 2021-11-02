@@ -14,7 +14,7 @@ import { ListItemText } from '@material-ui/core';
 
 import SearchIcon from '@material-ui/icons/Search';
 import { InputBase } from '@material-ui/core';
-import { Favorite, ShoppingCart } from '@material-ui/icons';
+import { LocalMallOutlined, FavoriteBorderOutlined } from '@material-ui/icons';
 import { auth } from '../../firebase'
 import { useHistory } from 'react-router';
 import HeaderV from './HeaderV';
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     },
     logo: {
         height: 20,
-        marginLeft: '2em',
+        marginLeft: '5em',
         [theme.breakpoints.down('md')]: {
             height: 20
         },
@@ -57,19 +57,20 @@ const useStyles = makeStyles(theme => ({
 
     },
     logoContainer: {
-        marginLeft: '6em',
+        marginLeft: '4em',
         marginRight: '4em',
+        marginTop: '0.5em',
         padding: 0,
         "&:hover": {
             backgroundColor: 'transparent'
         },
         [theme.breakpoints.down('md')]: {
-            marginRight: '1em',
+            marginRight: '5em',
             marginLeft: '1em'
         },
         [theme.breakpoints.down('sm')]: {
-            marginRight: 0,
-            marginLeft: 0
+            marginRight: '4em',
+            marginLeft: '2em'
         }
 
     },
@@ -119,10 +120,12 @@ const useStyles = makeStyles(theme => ({
     drawerIcon: {
         height: '50px',
         width: '50px',
-        color: 'black'
+        color: 'black',
+
     },
     drawerIconContainer: {
         marginLeft: 'auto',
+
         "&:hover": {
             backgroundColor: 'transparent'
         }
@@ -149,9 +152,11 @@ const useStyles = makeStyles(theme => ({
         }
     },
     appBar: {
-        zIndex: theme.zIndex.modal + 1,
-        backgroundColor: '#FFB319',
-        borderBottom: '#F037A5'
+        zIndex: theme.zIndex.modal,
+        borderBottomColor: "#171717",
+        backgroundColor: '#FEFEFE',
+        borderBottom: "1px solid rgba(0,0,0,.2)",
+        elevation: '120px'
     },
     searchIcon: {
         padding: theme.spacing(0, 0.2),
@@ -227,7 +232,7 @@ export default function Header(props) {
 
     const routesV = [
         { name: 'My Account', link: '/account', activeIndex: 4 },
-        { name: 'My Order', link: '/myorder', activeIndex: 5, },
+        { name: 'My Order', link: '/Myorder', activeIndex: 5, },
         { name: 'My Wallet', link: '/mywallet', activeIndex: 6 },
         { name: 'My Wishlist', link: '/Wishlist', activeIndex: 7 },
         { name: 'Cart', link: '/Cart', activeIndex: 8 },
@@ -259,7 +264,7 @@ export default function Header(props) {
                 className={classes.tabContainer}
                 value={props.value}
                 onChange={handleChange}
-                indicatorColor='#FFB319'
+                indicatorColor='#EFEFEF'
             >
                 {routes.map((route, index) => (
                     <Tab
@@ -325,10 +330,10 @@ export default function Header(props) {
                 </Button>
             }
             <Button component={Link} to='/Wishlist' onClick={() => props.setValue(8)} >
-                <Favorite />
+                <FavoriteBorderOutlined />
             </Button>
             <Button style={{ marginRight: '10em' }} component={Link} to='/cart' onClick={() => props.setValue(8)}>
-                <ShoppingCart />
+                <LocalMallOutlined />
             </Button>
         </React.Fragment>
 
@@ -484,7 +489,7 @@ export default function Header(props) {
                             onClick={() => props.setValue(0)}
                             disableRipple
                         >
-                            <h5 style={{ alignContent: 'center', justifyContent: 'center' }}>ShoppingAdda</h5>
+                            <h5 style={{ alignContent: 'center', justifyContent: 'center', fontWeight: 'bold' }}>ShoppingAdda</h5>
                         </Button>
 
                         {matches ? drawer : tabs}

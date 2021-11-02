@@ -132,11 +132,47 @@ export default function Checkout() {
       setcartTotal(0);
       if (status === "success") {
          console.log("Success! Check email for details", { type: "success" });
+         const addtoOrder = () => {
+            dataCart.map((item) => {
+               database.collection("users").doc(user).collection("order").add({
+                  price: item.price,
+                  productName: item.productName,
+                  desc: item.productName,
+                  image: item.image,
+                  address: address
+               })
+            });
+
+         }
+         const deleteCart = () => {
+            dataCart.map((item) => {
+               database.collection("users").doc(user).collection("cart").doc(item.key).delete().then((res) => { console.log(res) })
+            })
+         }
       } else {
          console.log("Something went wrong", { type: "error" });
       }
    }
+   const pod = () => {
 
+      dataCart.map((item) => {
+         database.collection("users").doc(user).collection("order").add({
+            price: item.price,
+            productName: item.productName,
+            desc: item.productName,
+            image: item.image,
+            address: address,
+            oldPrice: item.oldPrice
+         })
+      });
+
+
+
+      dataCart.map((item) => {
+         database.collection("users").doc(user).collection("cart").doc(item.key).delete().then((res) => { console.log(res) })
+      })
+
+   }
 
    // Address FEtch
    useEffect(() => {
@@ -241,7 +277,9 @@ export default function Checkout() {
                                     name="Payment"
                                  />
                               </> :
-                              <Button style={{ borderColor: 'black', backgroundColor: 'red', color: 'white', borderRadius: '4px', padding: '0px 12px', fontSize: '14px', height: '30px', fontWeight: 'bold' }}>
+                              <Button
+                                 style={{ borderColor: 'black', backgroundColor: 'red', color: 'white', borderRadius: '4px', padding: '0px 12px', fontSize: '14px', height: '30px', fontWeight: 'bold' }}
+                                 onClick={() => { pod() }}>
                                  Confirm Order</Button>
                         }
                      </CardContent>
