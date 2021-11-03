@@ -40,7 +40,7 @@ export default function ItemCards({ id, productName, image, price, oldPrice }) {
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) {
-                setUser(user); console.log(user.uid);
+                setUser(user);
                 database.collection('users').doc(user.uid).collection('cart').onSnapshot((a) => {
                     const fdata = [];
                     a.forEach((item) => {

@@ -106,11 +106,11 @@ function Myorder() {
    const theme = useTheme();
 
 
-   const { oder, ototal, osave } = useContext(StateContext);
+   const { oder, ototal, osave, addr } = useContext(StateContext);
    const [dataOrder] = oder;
    const [orderTotal] = ototal;
    const [orderSave] = osave;
-
+   const [add] = addr;
 
    return (
 
@@ -120,7 +120,16 @@ function Myorder() {
 
 
                <h2>My Orders</h2>
+               {
+                  add[0] !== undefined ? <>
 
+                     <Row style={styles.top}>
+                        <Col sm={8}><h4>Deliver To:{add[0].name} </h4></Col>
+                        <Col><h4>Phone No :{add[0].phone}</h4> </Col>
+                        <Col sm={4}><h4>Address : {add[0].address} {add[0].city} {add[0].pincode}</h4></Col>
+
+                     </Row></> : <></>
+               }
 
 
                {dataOrder && dataOrder.map((doc, i) =>
@@ -133,7 +142,7 @@ function Myorder() {
                            <Typography variant="subtitle1" color="textSecondary">
                               ₹{doc.price}
                            </Typography>
-                           <Typography variant="subtitle1" style={{ color: 'green' }}>
+                           <Typography variant="subtitle3" style={{ color: 'green' }}>
                               You saved ₹{doc.oldPrice - doc.price}!
                            </Typography>
                         </CardContent>
@@ -150,38 +159,25 @@ function Myorder() {
                   </Card>
                )
                }
-               <h3>Order Total : {orderTotal}</h3>
-               <h3>Order Save : {orderSave}</h3>
-               <h2>Item Will Be Deliverd To</h2>
+               <Container style={{ borderRadius: '1em', borderWidth: '2em' }}>
+                  <Row>
+                     <Col> <h4>Order Total : ₹{orderTotal}</h4></Col>
+                     <Col> <h5 style={{ color: 'green' }}>Total Saved : ₹{orderSave}</h5></Col>
+                  </Row>
+               </Container>
 
-
-               {
-                  dataOrder.length === 0 ? (<></>) :
-                     (
-                        <>
-                           {
-                              dataOrder.map((data, i) => {
-                                 <Container>
-                                    {i === 0 && data.address[0].address ? (<>
-                                       <h2>Address Details</h2>
-                                       <Row >
-                                          <Col sm={8}><h5>Phone No :{data.address[0].phone}</h5></Col>
-                                          <Col sm={4}><h5>Address : {data.address[0].address} {data.address.city} {data.address.pincode}</h5></Col>
-                                       </Row>
-                                    </>) :
-                                       (<></>)
-                                    }
-                                 </Container>
-
-                              })
-                           }
-                        </>
-                     )
-               }
             </Grid>
          </Grid>
       </div >
    )
 }
 
-export default Myorder
+const styles = {
+   top: {
+      marginTop: '3em',
+      marginBottom: '3em',
+      marginLeft: '0.2em'
+   }
+}
+
+export default Myorder;

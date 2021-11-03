@@ -124,7 +124,7 @@ export default function Checkout() {
 
    async function handleToken(token) {
       const response = await axios.post(
-         "http://localhost:5000/checkout",
+         "https://localhost:5000/checkout",
          { token, amount, address }
       );
       const { status } = response.data;

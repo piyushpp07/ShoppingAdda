@@ -489,7 +489,7 @@ export default function Header(props) {
                             onClick={() => props.setValue(0)}
                             disableRipple
                         >
-                            <h5 style={{ alignContent: 'center', justifyContent: 'center', fontWeight: 'bold' }}>ShoppingAdda</h5>
+                            <h5 style={{ fontStyle: 'oblique', alignContent: 'center', fontFamily: 'cursive', justifyContent: 'center', fontWeight: 'bold' }}>ShoppingAdda</h5>
                         </Button>
 
                         {matches ? drawer : tabs}
