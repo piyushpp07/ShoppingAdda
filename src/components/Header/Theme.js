@@ -21,39 +21,39 @@ export default createTheme({
     },
     typography: {
         tab: {
-            fontFamily: 'Raleway',
+              fontFamily:'sans-serif',
             textTransform: 'none',
             fontWeight: 700,
             fontSize: '1rem',
             color: '#171717'
         },
         estimate: {
-            fontFamily: 'Pacifico',
+            fontFamily:'sans-serif',
             fontSize: '1rem',
             textTransform: 'none',
             color: 'white'
         },
         h2: {
-            fontFamily: 'Raleway',
+              fontFamily:'sans-serif',
             fontWeight: 700,
             fontSize: '2.5rem',
             color: arcBlue,
             lineHeight: 1.5
         },
         h3: {
-            fontFamily: "Pacifico",
+            fontFamily:'sans-serif',
             fontSize: "2.5rem",
             color: arcBlue
         },
         h4: {
-            fontFamily: 'Raleway',
+              fontFamily:'sans-serif',
             fontSize: '1.75rem',
             color: arcBlue,
             fontWeight: 700
         },
         h6: {
             fontWeight: 500,
-            fontFamily: "Raleway",
+            fontFamily:'sans-serif',
             color: arcBlue,
             lineHeight: 1
         },
@@ -83,7 +83,7 @@ export default createTheme({
             textTransform: "none",
             color: arcBlue,
             borderRadius: 50,
-            fontFamily: "Roboto",
+            fontFamily:'sans-serif',
             fontWeight: "bold"
         }
     },

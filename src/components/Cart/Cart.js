@@ -8,6 +8,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
 import { toast } from 'react-toastify';
 import { StateContext } from '../../context/StateProvider';
 import EmptyCart from '../../assets/EmptyCart.png'
@@ -27,10 +29,20 @@ const useStyles = makeStyles(theme => ({
             paddingLeft: '1.5em',
             paddingRight: '1.5em',
             paddingTop: '1em',
+        },
+        [theme.breakpoints.down('xs')]: {
+            paddingLeft: '0.5em',
+            paddingRight: '0.5em',
+            paddingTop: '1em',
         }
     },
     root: {
         display: 'flex',
+        boxShadow:theme.shadows[10],
+        borderRadius:10,
+        padding:'0.5em',
+        paddingLeft:0
+        
     },
     details: {
         display: 'flex',
@@ -38,10 +50,11 @@ const useStyles = makeStyles(theme => ({
     },
     content: {
         flex: '1 0 auto',
+        paddingRight:'1em'
     },
     cover: {
-        width: 151,
-        marginLeft: 'auto'
+        width:151,
+        marginLeft:'auto',
     },
     controls: {
         display: 'flex',
@@ -133,7 +146,7 @@ export default function Cart(props) {
     const [address, setAddress] = useState('');
     const [message, setMessage] = useState('');
 
-
+    const [count, setCount] = React.useState(1);
     // delete
     const deleteItem = async (id, e) => {
         await database.collection('users')
@@ -278,35 +291,59 @@ export default function Cart(props) {
                             <Grid item lg={4}>
                                 {/* first Item */}
                                 {dataCart && dataCart.map(doc =>
-                                    <Card className={classes.root} style={{ marginBottom: '2em' }}>
-                                        <div className={classes.details}>
-                                            <CardContent className={classes.content}>
-                                                <Typography component="h5" variant="h5">
-                                                    {doc.productName}
-                                                </Typography>
-                                                <Typography variant="subtitle1" color="textSecondary">
-                                                    ₹{doc.price}
-                                                    <OriginalPrice id="price">{doc.oldPrice}</OriginalPrice>
-                                                </Typography>
-                                                <Typography variant="subtitle1" style={{ color: 'green' }}>
-                                                    You saved ₹{doc.oldPrice - doc.price}!
-                                                </Typography>
-                                            </CardContent>
-                                            <div className={classes.controls}>
-                                                <IconButton onClick={() => deleteItem(doc.key)} >
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                                <IconButton onClick={() => addtoWish(doc)} >
-                                                    <FavoriteIcon />
-                                                </IconButton>
-                                            </div>
-                                        </div>
-                                        <CardMedia
-                                            className={classes.cover}
-                                            image={doc.image}
-                                            title="Live from space album cover"
-                                        />
-                                    </Card>
+                                     <Card className={classes.root} style={{marginBottom:'2em',maxWidth:matchesXS?'23em' :'30em'}}>
+                                     <div className={classes.details}>
+                                         <CardContent className={classes.content}>
+                                         <Typography style={{fontFamily:'sans-serif',color:'black',fontWeight:'bold'}} variant={matchesXS?'h6':"h5"}>
+                                         {doc.productName}
+                                         </Typography>
+                                         <Typography variant="subtitle1"  style={{fontFamily:'16px sans-serif',color:'#333333',fontWeight:'bold'}} >
+                                         ₹{doc.price} 
+                                         <OriginalPrice id="price" style={{fontFamily:'sans-serif'}}>{doc.oldPrice}</OriginalPrice>
+                                         </Typography>
+                                         <Typography variant={matchesXS?'body1':"subtitle1"}  style={{fontFamily:'sans-serif',color:'#1D8802',fontSize:matchesXS?'0.7rem':'1.1rem'}} >
+                                         You saved ₹{doc.oldPrice - doc.price}!
+                                         </Typography>
+                                         <div>
+                                         <Button
+                                             variant='outlined'
+                                             aria-label="reduce"
+                                             onClick={() => {
+                                             setCount(Math.max(count - 1, 0));
+                                             }}
+                                             style={{marginRight:matchesXS?'0.2em':'1em'}}
+                                         >
+                                             <RemoveIcon fontSize="small" />
+                                         </Button>
+                                        {count}
+                                         <Button
+                                             variant='outlined'
+                                             aria-label="increase"
+                                             onClick={() => {
+                                             setCount(count + 1);
+                                             }}
+                                             style={{marginLeft:matchesXS?'0.2em':'1em',width:matchesXS?'0.2em':'inherit'}}
+                                         >
+                                             <AddIcon fontSize="small" />
+                                         </Button>
+                                         </div>
+                                         </CardContent>
+                                         <div className={classes.controls}>
+                                         <Button  variant='contained' style={{color:'white',backgroundColor:'red',marginRight:'0.5em'}} onClick={()=>deleteItem(doc.key)} >
+                                         <DeleteIcon/>
+                                         </Button>
+                                         <Button variant='contained' style={{color:'white',backgroundColor:'black'}} onClick={()=>addtoWish(doc)} >
+                                             <FavoriteIcon/>
+                                         </Button>
+                                         </div>
+                                     </div>
+                                     <CardMedia
+                                         className={classes.cover}
+                                         style={{maxWidth:matchesXS?'8em':'inherit'}}
+                                         image={doc.image}
+                                         title={doc.productName}
+                                     />
+                                     </Card>
                                 )
                                 }
                             </Grid>
