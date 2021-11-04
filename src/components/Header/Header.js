@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { AppBar, Button, IconButton, List, ListItem, Tab, Tabs, Typography } from '@material-ui/core';
+import React, { useState, useEffect,useContext } from 'react';
+import { AppBar, Button, IconButton, List, ListItem, Tab, Tabs, Typography,Badge } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles } from '@material-ui/styles';
@@ -18,7 +18,7 @@ import { LocalMallOutlined, FavoriteBorderOutlined } from '@material-ui/icons';
 import { auth } from '../../firebase'
 import { useHistory } from 'react-router';
 import HeaderV from './HeaderV';
-
+import { StateContext } from '../../context/StateProvider'
 
 
 
@@ -209,6 +209,11 @@ export default function Header(props) {
     const matches = useMediaQuery(theme.breakpoints.down('md'));
     const [search, setSearch] = useState("");
     const [openDrawer, setOpenDrawer] = useState(false)
+
+    const {cart,wish} =useContext(StateContext);
+    const [dataCart] =  cart;
+    const [dataWishlist] = wish;
+
     const handelSubmit = (e) => {
         e.preventDefault();
         history.push(`/search?name=${search}`);
@@ -329,12 +334,14 @@ export default function Header(props) {
                     </Typography>
                 </Button>
             }
-            <Button component={Link} to='/Wishlist' onClick={() => props.setValue(8)} >
-                <FavoriteBorderOutlined />
-            </Button>
-            <Button style={{ marginRight: '10em' }} component={Link} to='/cart' onClick={() => props.setValue(8)}>
-                <LocalMallOutlined />
-            </Button>
+            <Button  component={Link} to='/Wishlist' onClick={() => props.setValue(8)} >
+            <FavoriteBorderOutlined style={{color:dataWishlist.length ? '#FF0000':'black'}}/>
+        </Button>
+        <Button style={{marginRight:'10em'}}  component={Link} to='/cart' onClick={() => props.setValue(8)}>
+        <Badge badgeContent={dataCart.length} color="error">
+        <LocalMallOutlined style={{color:'black'}} />
+    </Badge>
+        </Button>
         </React.Fragment>
 
     );
