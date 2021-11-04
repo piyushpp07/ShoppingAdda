@@ -154,7 +154,6 @@ export default function Checkout() {
       }
    }
    const pod = () => {
-
       dataCart.map((item) => {
          database.collection("users").doc(user).collection("order").add({
             price: item.price,
@@ -165,9 +164,6 @@ export default function Checkout() {
             oldPrice: item.oldPrice
          })
       });
-
-
-
       dataCart.map((item) => {
          database.collection("users").doc(user).collection("cart").doc(item.key).delete().then((res) => { console.log(res) })
       })
