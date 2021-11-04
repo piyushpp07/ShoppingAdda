@@ -3,7 +3,7 @@ import { StateContext } from '../../context/StateProvider'
 import { auth } from '../../firebase';
 import { Container, Row, Col, Image, Button } from 'react-bootstrap'
 function MyAccount(props) {
-   const { oder, ototal, osave, cartsave, carttotal, addr, wishsave, wishtotal } =
+   const { ototal, osave, cartsave, carttotal, addr, wishsave, wishtotal } =
       useContext(StateContext);
    const [cartSave] = cartsave;
    const [cartTotal] = carttotal;

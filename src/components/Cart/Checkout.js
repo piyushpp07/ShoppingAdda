@@ -117,10 +117,6 @@ export default function Checkout() {
    const ide = user;
    const [amount, setAmount] = useState()
 
-   const [product] = React.useState({
-      name: "Purchase",
-      description: dataCart
-   });
 
    async function handleToken(token) {
       const response = await axios.post(
@@ -142,7 +138,6 @@ export default function Checkout() {
                   address: address
                })
             });
-
          }
          const deleteCart = () => {
             dataCart.map((item) => {

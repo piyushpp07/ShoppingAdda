@@ -20,11 +20,12 @@ import Checkout from './components/Cart/Checkout'
 import Search from './components/Header/Search';
 import Myorder from "./components/Order/Myorder";
 import { StateProvider } from './context/StateProvider'
-
+import Chat from './components/ChatBot/chatbot'
 function App() {
   const [value, setValue] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [user, setUser] = useState('');
+
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if (user) { setUser(user); console.log(user.uid) }
@@ -34,8 +35,6 @@ function App() {
   }, [])
   return (
     <StateProvider>
-
-
       <ThemeProvider theme={theme}>
         <BrowserRouter>
 
@@ -93,7 +92,7 @@ function App() {
               )} />
 
           </Switch>
-
+          <Chat />
 
 
           <Footer />

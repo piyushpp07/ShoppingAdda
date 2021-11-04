@@ -1,5 +1,5 @@
-import React, { useState, useEffect,useContext } from 'react';
-import { AppBar, Button, IconButton, List, ListItem, Tab, Tabs, Typography,Badge } from '@material-ui/core';
+import React, { useState, useEffect, useContext } from 'react';
+import { AppBar, Button, IconButton, List, ListItem, Tab, Tabs, Typography, Badge } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles } from '@material-ui/styles';
@@ -210,8 +210,8 @@ export default function Header(props) {
     const [search, setSearch] = useState("");
     const [openDrawer, setOpenDrawer] = useState(false)
 
-    const {cart,wish} =useContext(StateContext);
-    const [dataCart] =  cart;
+    const { cart, wish } = useContext(StateContext);
+    const [dataCart] = cart;
     const [dataWishlist] = wish;
 
     const handelSubmit = (e) => {
@@ -334,14 +334,14 @@ export default function Header(props) {
                     </Typography>
                 </Button>
             }
-            <Button  component={Link} to='/Wishlist' onClick={() => props.setValue(8)} >
-            <FavoriteBorderOutlined style={{color:dataWishlist.length ? '#FF0000':'black'}}/>
-        </Button>
-        <Button style={{marginRight:'10em'}}  component={Link} to='/cart' onClick={() => props.setValue(8)}>
-        <Badge badgeContent={dataCart.length} color="error">
-        <LocalMallOutlined style={{color:'black'}} />
-    </Badge>
-        </Button>
+            <Button component={Link} to='/Wishlist' onClick={() => props.setValue(8)} >
+                <FavoriteBorderOutlined style={{ color: dataWishlist.length ? '#FF0000' : 'black' }} />
+            </Button>
+            <Button style={{ marginRight: '10em' }} component={Link} to='/cart' onClick={() => props.setValue(8)}>
+                <Badge badgeContent={dataCart.length} color="error">
+                    <LocalMallOutlined style={{ color: 'black' }} />
+                </Badge>
+            </Button>
         </React.Fragment>
 
     );

@@ -25,7 +25,7 @@
     "react-stripe-checkout": "^2.6.3",
     "react-toastify": "^8.0.2",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^5.3.3",
+    "styled-components": "^4.4.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -54,5 +54,8 @@
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2"
+  },
+  "devDependencies": {
+    "react-simple-chatbot": "^0.6.1"
   }
 }

@@ -1,11 +1,9 @@
 import React, { useContext } from 'react'
-import { Grid, makeStyles, Typography, useTheme, useMediaQuery, Button, TextField, Dialog, DialogContent } from '@material-ui/core';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import DeleteIcon from '@material-ui/icons/Delete';
+
 import { StateContext } from '../../context/StateProvider';
 import { Container, Row, Col } from 'react-bootstrap'
 
@@ -103,7 +101,6 @@ const useStyles = makeStyles(theme => ({
 
 function Myorder() {
    const classes = useStyles();
-   const theme = useTheme();
 
 
    const { oder, ototal, osave, addr } = useContext(StateContext);

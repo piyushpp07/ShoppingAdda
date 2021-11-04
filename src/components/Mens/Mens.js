@@ -8,7 +8,6 @@ export default function Mens() {
     const { mens } = useContext(StateContext)
     const [dataMens, setDataMens] = mens;
     const [type, setType] = useState('price')
-    const [sorted, setSorted] = useState([])
     const handelChange = (e) => {
         setType(e.target.value);
         console.log(type)

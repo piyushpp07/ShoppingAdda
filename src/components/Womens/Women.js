@@ -17,6 +17,7 @@ export default function Womens() {
          case 'price':
             setDataWomens(dataWomens.sort(dynamicSort("Price")))
             break;
+         default: break;
 
       }
    }
