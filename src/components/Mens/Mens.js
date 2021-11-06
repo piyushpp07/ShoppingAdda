@@ -62,6 +62,7 @@ export default function Mens() {
                                 image={doc.image}
                                 price={doc.price}
                                 oldPrice={doc.oldPrice}
+                                desc={doc.desc}
                             />
                         </Col>
                     )}

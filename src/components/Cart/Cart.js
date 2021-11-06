@@ -304,27 +304,7 @@ export default function Cart(props) {
                                                     You saved ₹{doc.oldPrice - doc.price}!
                                                 </Typography>
                                                 <div>
-                                                    <Button
-                                                        variant='outlined'
-                                                        aria-label="reduce"
-                                                        onClick={() => {
-                                                            setCount(Math.max(count - 1, 0));
-                                                        }}
-                                                        style={{ marginRight: matchesXS ? '0.2em' : '1em' }}
-                                                    >
-                                                        <RemoveIcon fontSize="small" />
-                                                    </Button>
-                                                    {count}
-                                                    <Button
-                                                        variant='outlined'
-                                                        aria-label="increase"
-                                                        onClick={() => {
-                                                            setCount(count + 1);
-                                                        }}
-                                                        style={{ marginLeft: matchesXS ? '0.2em' : '1em', width: matchesXS ? '0.2em' : 'inherit' }}
-                                                    >
-                                                        <AddIcon fontSize="small" />
-                                                    </Button>
+
                                                 </div>
                                             </CardContent>
                                             <div className={classes.controls}>

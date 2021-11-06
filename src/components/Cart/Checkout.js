@@ -120,7 +120,7 @@ export default function Checkout() {
 
    async function handleToken(token) {
       const response = await axios.post(
-         "https://localhost:5000/checkout",
+         "https://mentorbackend.herokuapp.com/checkout",
          { token, amount, address }
       );
       const { status } = response.data;
@@ -128,41 +128,31 @@ export default function Checkout() {
       setcartTotal(0);
       if (status === "success") {
          console.log("Success! Check email for details", { type: "success" });
-         const addtoOrder = () => {
-            dataCart.map((item) => {
-               database.collection("users").doc(user).collection("order").add({
-                  price: item.price,
-                  productName: item.productName,
-                  desc: item.productName,
-                  image: item.image,
-                  address: address
-               })
-            });
-         }
-         const deleteCart = () => {
-            dataCart.map((item) => {
-               database.collection("users").doc(user).collection("cart").doc(item.key).delete().then((res) => { console.log(res) })
-            })
-         }
+         addtoOrder();
+         deleteCart();
       } else {
          console.log("Something went wrong", { type: "error" });
       }
    }
-   const pod = () => {
+   const addtoOrder = () => {
       dataCart.map((item) => {
          database.collection("users").doc(user).collection("order").add({
             price: item.price,
             productName: item.productName,
             desc: item.productName,
             image: item.image,
-            address: address,
-            oldPrice: item.oldPrice
+            address: address
          })
       });
+   }
+   const deleteCart = () => {
       dataCart.map((item) => {
          database.collection("users").doc(user).collection("cart").doc(item.key).delete().then((res) => { console.log(res) })
       })
-
+   }
+   const pod = () => {
+      addtoOrder();
+      deleteCart();
    }
 
    // Address FEtch

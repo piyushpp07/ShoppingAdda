@@ -19,6 +19,10 @@ import Wishlist from './components/Wishlist/Wishlist';
 import Checkout from './components/Cart/Checkout'
 import Search from './components/Header/Search';
 import Myorder from "./components/Order/Myorder";
+import Top from './components/Mens/Top'
+import Bottom from './components/Mens/Bottom'
+import Topwomens from "./components/Womens/TopWomens";
+import Bottomwomens from "./components/Womens/Bottom";
 import { StateProvider } from './context/StateProvider'
 import Chat from './components/ChatBot/chatbot'
 function App() {
@@ -75,7 +79,18 @@ function App() {
             <Route path="/Myorder">
               <Myorder />
             </Route>
-
+            <Route path="/Top">
+              <Top />
+            </Route>
+            <Route path="/Bottom">
+              <Bottom />
+            </Route>
+            <Route path="/Topwomens">
+              <Topwomens />
+            </Route>
+            <Route path="/BottomWomensWear">
+              <Bottomwomens />
+            </Route>
             <Route exact path='/cart'
               render={(props) => (
                 <Cart

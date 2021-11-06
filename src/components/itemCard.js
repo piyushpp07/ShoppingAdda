@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function ItemCards({ id, productName, image, price, oldPrice }) {
+export default function ItemCards({ id, productName, image, price, oldPrice, desc }) {
     const classes = useStyles();
     const [user, setUser] = useState("")
     const [docs, setDocs] = useState([]);
@@ -184,7 +184,7 @@ export default function ItemCards({ id, productName, image, price, oldPrice }) {
                 </CardMedia>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                        T-Shirt
+                        {desc}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
                         {productName}

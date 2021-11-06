@@ -1,21 +1,27 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import ItemCards from '../itemCard'
 import { Container, Row, Col } from 'react-bootstrap'
 import { StateContext } from '../../context/StateProvider';
-export default function Womens() {
-   const { womens } = useContext(StateContext)
 
+export default function Topwomens() {
+   const { womens } = useContext(StateContext)
+   const [tm, setTm] = useState()
    const [dataWomens, setDataWomens] = womens;
    const [type, setType] = useState('productName')
+   useEffect(() => {
+      let womensTop = dataWomens.filter((e) => { return e.type === "wtop" });
+      console.log(womensTop)
+      setTm(womensTop)
+   }, [dataWomens])
    const handelChange = (e) => {
       setType(e.target.value);
       console.log(type)
       switch (type) {
          case 'productName':
-            setDataWomens(dataWomens.sort(dynamicSort("productName")))
+            setTm(tm.sort(dynamicSort("productName")))
             break;
          case 'price':
-            setDataWomens(dataWomens.sort(dynamicSort("Price")))
+            setTm(tm.sort(dynamicSort("Price")))
             break;
          default: break;
 
@@ -39,9 +45,8 @@ export default function Womens() {
    return (
       <div>
 
-
          < Container style={{ alignContent: 'center', marginLeft: '2em' }}>
-            <h3 style={{ alignSelf: 'center' }}>Best Women's Collection</h3>
+            <h3 style={{ alignSelf: 'center' }}>Best Women's Topwear Collection</h3>
             <Row>
                <Col>
                   <h4>Sort By</h4>
@@ -53,7 +58,7 @@ export default function Womens() {
 
             </Row>
             <Row fixed>
-               {dataWomens && dataWomens.map((doc) =>
+               {tm && tm.map((doc) =>
                   <Col xs={13} md={3}>
                      <ItemCards
                         key={doc.id}
