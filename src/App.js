@@ -29,7 +29,6 @@ function App() {
   const [value, setValue] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [user, setUser] = useState('');
-
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if (user) { setUser(user); console.log(user.uid) }

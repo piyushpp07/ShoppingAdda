@@ -227,12 +227,12 @@ export default function Header(props) {
     const routes = [
         { name: 'MEN', link: '/Mens', activeIndex: 0 },
         { name: 'WOMEN', link: '/Womens', activeIndex: 1, },
-        { name: 'MOBILE COVER', link: '/cover', activeIndex: 2 },
+
     ];
     const routesH = [
         { name: 'Men', link: '/Mens', activeIndex: 0 },
         { name: 'Women', link: '/Womens', activeIndex: 1, },
-        { name: 'Mobile Cover', link: '/cover', activeIndex: 2 },
+
     ];
 
     const routesV = [
@@ -496,7 +496,7 @@ export default function Header(props) {
                             onClick={() => props.setValue(0)}
                             disableRipple
                         >
-                            <h5 style={{ fontStyle: 'oblique', alignContent: 'center', fontFamily: 'cursive', justifyContent: 'center', fontWeight: 'bold' }}>ShoppingAdda</h5>
+                            <h5 style={{ alignContent: 'center', justifyContent: 'center', fontWeight: 'bold' }}>ShoppingAdda</h5>
                         </Button>
 
                         {matches ? drawer : tabs}
