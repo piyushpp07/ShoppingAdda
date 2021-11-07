@@ -7,8 +7,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import DeleteIcon from '@material-ui/icons/Delete';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
 import { toast } from 'react-toastify';
 import { StateContext } from '../../context/StateProvider';
 import EmptyCart from '../../assets/EmptyCart.png'
@@ -145,7 +143,6 @@ export default function Cart(props) {
     const [address, setAddress] = useState('');
     const [message, setMessage] = useState('');
 
-    const [count, setCount] = React.useState(1);
     // delete
     const deleteItem = async (id, e) => {
         await database.collection('users')

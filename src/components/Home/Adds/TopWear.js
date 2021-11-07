@@ -1,4 +1,4 @@
-import React, { Link } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { Row, Col, Image } from 'react-bootstrap'
 export default function TopWear() {

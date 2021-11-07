@@ -6,7 +6,7 @@ import { StateContext } from '../../context/StateProvider'
 
 export default function Top() {
    const { mens } = useContext(StateContext)
-   const [dataMens, setDataMens] = mens;
+   const [dataMens] = mens;
    const [tm, setTm] = useState()
    const [type, setType] = useState('price')
    let mensTop;

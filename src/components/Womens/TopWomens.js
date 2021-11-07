@@ -12,7 +12,7 @@ export default function Topwomens() {
       let womensTop = dataWomens.filter((e) => { return e.type === "wtop" });
       console.log(womensTop)
       setTm(womensTop)
-   }, [dataWomens])
+   })
    const handelChange = (e) => {
       setType(e.target.value);
       console.log(type)

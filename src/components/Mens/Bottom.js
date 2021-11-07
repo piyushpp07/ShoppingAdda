@@ -1,12 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react'
 import ItemCards from '../itemCard'
 import { Container, Row, Col } from 'react-bootstrap'
-
 import { StateContext } from '../../context/StateProvider'
 
 export default function Bottomwomens() {
    const { mens } = useContext(StateContext)
-   const [dataMens, setDataMens] = mens;
+   const [dataMens] = mens;
    const [tm, setTm] = useState()
    const [type, setType] = useState('price')
    let mensTop;
@@ -14,7 +13,7 @@ export default function Bottomwomens() {
       mensTop = dataMens.filter((e) => { return e.type === "menb" });
       console.log(mensTop)
       setTm(mensTop)
-   }, [dataMens])
+   })
    const handelChange = (e) => {
       setType(e.target.value);
       console.log(type)
