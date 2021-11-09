@@ -9,10 +9,9 @@ export default function Top() {
    const [dataMens] = mens;
    const [tm, setTm] = useState()
    const [type, setType] = useState('price')
-   let mensTop;
+
    useEffect(() => {
-      mensTop = dataMens.filter((e) => { return e.type === "menstop" });
-      console.log(mensTop)
+     let mensTop = dataMens.filter((e) => { return e.type === "menstop" });
       setTm(mensTop)
    }, [dataMens])
    const handelChange = (e) => {

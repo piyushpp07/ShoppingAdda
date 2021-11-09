@@ -6,13 +6,13 @@ import { StateContext } from '../../context/StateProvider';
 export default function Bottomwomens() {
    const { womens } = useContext(StateContext)
    const [tm, setTm] = useState()
-   const [dataWomens, setDataWomens] = womens;
+   const [dataWomens] = womens;
    const [type, setType] = useState('productName')
    useEffect(() => {
       let womensTop = dataWomens.filter((e) => { return e.type === "wb" });
       console.log(womensTop)
       setTm(womensTop)
-   })
+   }, [dataWomens])
    const handelChange = (e) => {
       setType(e.target.value);
       console.log(type)

@@ -135,7 +135,7 @@ export default function Checkout() {
       }
    }
    const addtoOrder = () => {
-      dataCart.map((item) => {
+      dataCart.map((item) => (
          database.collection("users").doc(user).collection("order").add({
             price: item.price,
             productName: item.productName,
@@ -143,12 +143,12 @@ export default function Checkout() {
             image: item.image,
             address: address
          })
-      });
+      ));
    }
    const deleteCart = () => {
-      dataCart.map((item) => {
+      dataCart.map((item) => (
          database.collection("users").doc(user).collection("cart").doc(item.key).delete().then((res) => { console.log(res) })
-      })
+      ))
    }
    const pod = () => {
       addtoOrder();
@@ -165,7 +165,7 @@ export default function Checkout() {
          setAddress(getAddress);
          setAmount(cartTotal)
       });
-   }, [ide])
+   }, [cartTotal, ide])
 
 
 

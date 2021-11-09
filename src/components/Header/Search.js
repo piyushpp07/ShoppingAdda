@@ -12,10 +12,7 @@ const Search = () => {
    let search = query.get("name");
    console.log(search)
    useEffect(() => {
-      searchData();
-   }, [search])
-   const searchData = async () => {
-      let cm = await database.collection('collection').doc('mens')
+      let cm =  database.collection('collection').doc('mens')
       cm.collection('MensAttire').where("productName", "==", search).get().then((querySnapshot) => {
          const fdata = [];
          querySnapshot.forEach((item) => {
@@ -29,7 +26,7 @@ const Search = () => {
 
       }).catch(setData([]))
 
-      let cw = await database.collection('collection').doc('women')
+      let cw =  database.collection('collection').doc('women')
       cw.collection('WomenAttire').where("productName", "==", search).get().then((querySnapshot) => {
          const fdata = [];
          querySnapshot.forEach((item) => {
@@ -41,8 +38,8 @@ const Search = () => {
          if (fdata.length !== 0) { setData(fdata); }
 
       })
+   }, [search])
 
-   }
    return (
       < Container style={{ alignContent: 'center' }}>
          <h3 style={{ alignSelf: 'center' }}>Search Results</h3>

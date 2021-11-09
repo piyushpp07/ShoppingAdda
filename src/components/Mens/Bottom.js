@@ -8,15 +8,14 @@ export default function Bottomwomens() {
    const [dataMens] = mens;
    const [tm, setTm] = useState()
    const [type, setType] = useState('price')
-   let mensTop;
+
    useEffect(() => {
-      mensTop = dataMens.filter((e) => { return e.type === "menb" });
-      console.log(mensTop)
+      let mensTop = dataMens.filter((e) => { return e.type === "menb" });
       setTm(mensTop)
-   })
+   }, [dataMens])
    const handelChange = (e) => {
       setType(e.target.value);
-      console.log(type)
+
       switch (type) {
          case 'productName':
             setTm(tm.sort(dynamicSort("productName")))

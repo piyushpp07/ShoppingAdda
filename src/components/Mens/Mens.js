@@ -10,7 +10,7 @@ export default function Mens() {
     const [type, setType] = useState('price')
     const handelChange = (e) => {
         setType(e.target.value);
-        console.log(type)
+
         switch (type) {
             case 'productName':
                 setDataMens(dataMens.sort(dynamicSort("productName")))
