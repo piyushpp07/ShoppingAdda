@@ -67,6 +67,7 @@ export default function Bottomwomens() {
                         image={doc.image}
                         price={doc.price}
                         oldPrice={doc.oldPrice}
+                        desc={doc.desc}
                      />
                   </Col>
                )}
