@@ -50,6 +50,7 @@ export default function Bottomwomens() {
                <Col>
                   <h4>Sort By</h4>
                   <select className='dropdown' name='Sort By' onChange={handelChange}>
+                     <option disabled selected value="null"> Sort By</option>
                      <option value="productName">Price</option>
                      <option value="price">Product Name</option>
                   </select>
