@@ -21,10 +21,9 @@ export default function Bottomwomens() {
             setTm(tm.sort(dynamicSort("productName")))
             break;
          case 'price':
-            setTm(tm.sort(dynamicSort("Price")))
+            setTm(tm.sort(dynamicSort("price")))
             break;
-         default: break;
-
+         default: setTm(tm.sort(dynamicSort("price")))
       }
    }
    function dynamicSort(property) {

@@ -4,7 +4,6 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { StateContext } from '../../context/StateProvider';
 export default function Womens() {
    const { womens } = useContext(StateContext)
-
    const [dataWomens, setDataWomens] = womens;
    const [type, setType] = useState('productName')
    const handelChange = (e) => {
@@ -15,9 +14,9 @@ export default function Womens() {
             setDataWomens(dataWomens.sort(dynamicSort("productName")))
             break;
          case 'price':
-            setDataWomens(dataWomens.sort(dynamicSort("Price")))
+            setDataWomens(dataWomens.sort(dynamicSort("price")))
             break;
-         default: break;
+         default: setDataWomens(dataWomens.sort(dynamicSort("price")))
 
       }
    }
@@ -38,8 +37,6 @@ export default function Womens() {
 
    return (
       <div>
-
-
          < Container style={{ alignContent: 'center', marginLeft: '2em' }}>
             <h3 style={{ alignSelf: 'center' }}>Best Women's Collection</h3>
             <Row>
