@@ -319,7 +319,7 @@ export default function Footer() {
                             rel="noreferrer"
                             href="https://www.linkedin.com/in/piyush-paradkar-61a2a11b1/"
                         >
-                            @piyush_paradkar and S Karthik sharma
+                            @Piyush_paradkar
                         </a>
                     </h5>
                 </div>
